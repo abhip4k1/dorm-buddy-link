@@ -108,30 +108,42 @@ const Emergency = () => {
         {/* Emergency Contacts */}
         <div className="w-full max-w-sm mt-10 space-y-3">
           <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide text-center mb-2">
-            Emergency Contacts
+            Azad Bhavan B - Emergency Contacts
           </p>
           <a 
-            href="tel:+919876543210" 
+            href="tel:+912652395501" 
             className="flex items-center gap-3 bg-card p-4 rounded-xl shadow-card hover:bg-secondary transition-colors"
           >
             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
               <Phone className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1">
-              <p className="font-medium text-foreground">Warden Office</p>
-              <p className="text-sm text-muted-foreground">+91 98765 43210</p>
+              <p className="font-medium text-foreground">Warden - Dr. R.K. Patel</p>
+              <p className="text-sm text-muted-foreground">+91 265 2395501</p>
             </div>
           </a>
           <a 
-            href="tel:+919876543211" 
+            href="tel:+912652395500" 
             className="flex items-center gap-3 bg-card p-4 rounded-xl shadow-card hover:bg-secondary transition-colors"
           >
             <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center">
               <ShieldAlert className="w-5 h-5 text-destructive" />
             </div>
             <div className="flex-1">
-              <p className="font-medium text-foreground">Security (24/7)</p>
-              <p className="text-sm text-muted-foreground">+91 98765 43211</p>
+              <p className="font-medium text-foreground">PU Security (24/7)</p>
+              <p className="text-sm text-muted-foreground">+91 265 2395500</p>
+            </div>
+          </a>
+          <a 
+            href="tel:+912652395555" 
+            className="flex items-center gap-3 bg-card p-4 rounded-xl shadow-card hover:bg-secondary transition-colors"
+          >
+            <div className="w-10 h-10 rounded-full bg-warning/10 flex items-center justify-center">
+              <Phone className="w-5 h-5 text-warning" />
+            </div>
+            <div className="flex-1">
+              <p className="font-medium text-foreground">Hostel Admin Office</p>
+              <p className="text-sm text-muted-foreground">+91 265 2395555</p>
             </div>
           </a>
         </div>

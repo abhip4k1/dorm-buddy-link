@@ -9,23 +9,23 @@ import { Calendar, Plus, ChevronDown, ChevronUp, CheckCircle2 } from "lucide-rea
 
 const existingPasses = [
   {
-    id: "GP-2024-015",
-    date: "Jan 5, 2024",
-    reason: "Family function at home",
+    id: "GP-PU-2026-015",
+    date: "Jan 5, 2026",
+    reason: "Family function - Going to hometown",
     status: "approved" as const,
-    approvedBy: "Warden - Dr. Sharma",
+    approvedBy: "Warden - Dr. R.K. Patel",
   },
   {
-    id: "GP-2024-012",
-    date: "Dec 28, 2023",
-    reason: "Medical checkup in city",
+    id: "GP-PU-2025-012",
+    date: "Dec 28, 2025",
+    reason: "Medical checkup at Vadodara hospital",
     status: "approved" as const,
-    approvedBy: "Warden - Dr. Sharma",
+    approvedBy: "Warden - Dr. R.K. Patel",
   },
   {
-    id: "GP-2024-018",
-    date: "Jan 10, 2024",
-    reason: "Interview at tech company",
+    id: "GP-PU-2026-018",
+    date: "Jan 10, 2026",
+    reason: "Interview at TCS Gandhinagar",
     status: "pending" as const,
   },
 ];
@@ -169,10 +169,13 @@ const GatePass = () => {
 
       {/* Info */}
       <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
-        <p className="text-sm text-foreground font-medium mb-1">Important Note</p>
-        <p className="text-xs text-muted-foreground">
-          Gate pass requests should be submitted at least 24 hours in advance. Emergency requests may require warden's direct approval.
-        </p>
+        <p className="text-sm text-foreground font-medium mb-1">Gate Pass Guidelines</p>
+        <ul className="text-xs text-muted-foreground space-y-1">
+          <li>• Submit requests at least 24 hours in advance</li>
+          <li>• Parents receive SMS upon approval</li>
+          <li>• Emergency leaves require warden's direct approval</li>
+          <li>• Gate closes at 11 PM - late entry needs prior permission</li>
+        </ul>
       </div>
     </Layout>
   );

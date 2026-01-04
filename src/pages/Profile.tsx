@@ -18,13 +18,16 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const studentInfo = {
-    name: "Rahul Kumar",
-    studentId: "STU2024001",
-    email: "rahul.kumar@university.edu",
+    name: "Abhi",
+    enrollmentId: "2303031240145",
+    email: "2303031240145@paruluniversity.ac.in",
     phone: "+91 98765 43210",
-    room: "204",
-    block: "Block A",
-    floor: "2nd Floor",
+    room: "411",
+    bed: "8",
+    block: "Azad Bhavan B",
+    floor: "4th Floor",
+    program: "B.Tech CSE",
+    year: "3rd Year",
     joinDate: "August 2023",
   };
 
@@ -43,10 +46,13 @@ const Profile = () => {
       {/* Profile Header */}
       <div className="text-center mb-6">
         <div className="w-24 h-24 rounded-full gradient-primary flex items-center justify-center mx-auto mb-4 shadow-glow">
-          <span className="text-3xl font-bold text-primary-foreground">RK</span>
+          <span className="text-3xl font-bold text-primary-foreground">AB</span>
         </div>
         <h1 className="text-xl font-bold text-foreground">{studentInfo.name}</h1>
-        <p className="text-sm text-muted-foreground">{studentInfo.studentId}</p>
+        <p className="text-sm text-muted-foreground">{studentInfo.program} • {studentInfo.year}</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          {studentInfo.enrollmentId}@paruluniversity.ac.in
+        </p>
       </div>
 
       {/* Room Info Card */}
@@ -56,21 +62,29 @@ const Profile = () => {
             <Building2 className="w-6 h-6 text-accent-foreground" />
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">Current Room</p>
+            <p className="text-sm text-muted-foreground">Current Accommodation</p>
             <p className="text-lg font-bold text-foreground">
-              Room {studentInfo.room}, {studentInfo.block}
+              {studentInfo.block}
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
+        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+          <div>
+            <p className="text-xs text-muted-foreground">Room</p>
+            <p className="text-sm font-medium text-foreground">{studentInfo.room}</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Bed</p>
+            <p className="text-sm font-medium text-foreground">{studentInfo.bed}</p>
+          </div>
           <div>
             <p className="text-xs text-muted-foreground">Floor</p>
             <p className="text-sm font-medium text-foreground">{studentInfo.floor}</p>
           </div>
-          <div>
-            <p className="text-xs text-muted-foreground">Since</p>
-            <p className="text-sm font-medium text-foreground">{studentInfo.joinDate}</p>
-          </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-border">
+          <p className="text-xs text-muted-foreground">Member Since</p>
+          <p className="text-sm font-medium text-foreground">{studentInfo.joinDate}</p>
         </div>
       </div>
 

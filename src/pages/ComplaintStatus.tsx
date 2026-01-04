@@ -6,36 +6,39 @@ import { Button } from "@/components/ui/button";
 
 const complaints = [
   {
-    id: "CMP-2024-0042",
-    category: "Maintenance",
-    title: "Broken ceiling fan in room 204",
+    id: "PU-HST-2026-0042",
+    category: "Room & Maintenance",
+    title: "Ceiling fan not working in Room 411",
     status: "pending" as const,
-    date: "Jan 2, 2024",
+    date: "Jan 2, 2026",
+    location: "Azad Bhavan B, Room 411",
     timeline: [
       { status: "Submitted", time: "Jan 2, 10:30 AM", completed: true },
     ],
   },
   {
-    id: "CMP-2024-0038",
-    category: "Hygiene",
-    title: "Washroom cleaning issue in Block A",
+    id: "PU-HST-2026-0038",
+    category: "Cleanliness",
+    title: "Washroom cleaning overdue - 4th Floor",
     status: "in-progress" as const,
-    date: "Dec 28, 2023",
+    date: "Dec 28, 2025",
+    location: "Azad Bhavan B, 4th Floor Common",
     timeline: [
       { status: "Submitted", time: "Dec 28, 2:15 PM", completed: true },
-      { status: "Reviewed", time: "Dec 29, 9:00 AM", completed: true },
-      { status: "In Progress", time: "Dec 30, 11:00 AM", completed: true },
+      { status: "Reviewed by Warden", time: "Dec 29, 9:00 AM", completed: true },
+      { status: "Assigned to Staff", time: "Dec 30, 11:00 AM", completed: true },
     ],
   },
   {
-    id: "CMP-2024-0031",
-    category: "Mess",
-    title: "Quality concern with dinner items",
+    id: "PU-HST-2025-0031",
+    category: "Mess Related",
+    title: "Quality issue with dinner dal",
     status: "resolved" as const,
-    date: "Dec 20, 2023",
+    date: "Dec 20, 2025",
+    location: "Azad Bhavan Mess",
     timeline: [
       { status: "Submitted", time: "Dec 20, 8:45 PM", completed: true },
-      { status: "Reviewed", time: "Dec 21, 10:00 AM", completed: true },
+      { status: "Mess In-charge Notified", time: "Dec 21, 10:00 AM", completed: true },
       { status: "Resolved", time: "Dec 22, 3:00 PM", completed: true },
     ],
   },
@@ -69,12 +72,13 @@ const ComplaintStatus = () => {
                 </div>
                 <StatusBadge status={complaint.status} />
               </div>
-              <div className="flex items-center gap-2 mt-2">
+              <div className="flex items-center gap-2 mt-2 flex-wrap">
                 <span className="text-xs px-2 py-1 bg-secondary rounded-full text-muted-foreground">
                   {complaint.category}
                 </span>
                 <span className="text-xs text-muted-foreground">{complaint.date}</span>
               </div>
+              <p className="text-xs text-primary mt-2">📍 {complaint.location}</p>
             </div>
 
             {/* Timeline */}

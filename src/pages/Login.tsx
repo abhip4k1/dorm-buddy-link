@@ -7,7 +7,7 @@ import { Building2, GraduationCap } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [studentId, setStudentId] = useState("");
+  const [enrollmentId, setEnrollmentId] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +38,7 @@ const Login = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-primary-foreground">HostelSphere</h1>
-              <p className="text-primary-foreground/80 text-sm">Student Hostel Portal</p>
+              <p className="text-primary-foreground/80 text-sm">Parul University Hostels</p>
             </div>
           </div>
           
@@ -46,7 +46,7 @@ const Login = () => {
             Welcome Back! 👋
           </h2>
           <p className="text-primary-foreground/70 text-sm">
-            Sign in to access your hostel services
+            Sign in with your PU enrollment credentials
           </p>
         </div>
       </div>
@@ -57,17 +57,20 @@ const Login = () => {
           <div className="bg-card rounded-2xl shadow-xl p-6 animate-fade-in">
             <form onSubmit={handleLogin} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="studentId" className="text-foreground font-medium">
-                  Student ID / Email
+                <Label htmlFor="enrollmentId" className="text-foreground font-medium">
+                  Enrollment ID
                 </Label>
                 <Input
-                  id="studentId"
+                  id="enrollmentId"
                   type="text"
-                  placeholder="Enter your student ID"
-                  value={studentId}
-                  onChange={(e) => setStudentId(e.target.value)}
+                  placeholder="e.g. 2303031240145@paruluniversity.ac.in"
+                  value={enrollmentId}
+                  onChange={(e) => setEnrollmentId(e.target.value)}
                   className="h-12 bg-secondary border-0 focus:ring-2 focus:ring-primary"
                 />
+                <p className="text-xs text-muted-foreground">
+                  Use your PU enrollment email
+                </p>
               </div>
 
               <div className="space-y-2">
@@ -104,7 +107,7 @@ const Login = () => {
                 ) : (
                   <>
                     <GraduationCap className="w-5 h-5" />
-                    Sign In
+                    Sign In to HostelSphere
                   </>
                 )}
               </Button>
@@ -112,9 +115,9 @@ const Login = () => {
 
             <div className="mt-6 pt-6 border-t border-border">
               <p className="text-center text-sm text-muted-foreground">
-                New student?{" "}
+                New to PU Hostel?{" "}
                 <button className="text-primary font-medium hover:underline">
-                  Contact your hostel office
+                  Contact Hostel Admin Office
                 </button>
               </p>
             </div>
@@ -123,13 +126,20 @@ const Login = () => {
           {/* Info Cards */}
           <div className="mt-6 grid grid-cols-2 gap-3">
             <div className="bg-card rounded-xl p-4 shadow-card">
-              <p className="text-xs text-muted-foreground mb-1">Support</p>
-              <p className="text-sm font-medium text-foreground">hostel@university.edu</p>
+              <p className="text-xs text-muted-foreground mb-1">Hostel Office</p>
+              <p className="text-sm font-medium text-foreground">hostel@paruluniversity.ac.in</p>
             </div>
             <div className="bg-card rounded-xl p-4 shadow-card">
-              <p className="text-xs text-muted-foreground mb-1">Helpline</p>
-              <p className="text-sm font-medium text-foreground">+91 98765 43210</p>
+              <p className="text-xs text-muted-foreground mb-1">Helpline (24/7)</p>
+              <p className="text-sm font-medium text-foreground">+91 265 2395555</p>
             </div>
+          </div>
+
+          {/* University Branding */}
+          <div className="mt-6 text-center">
+            <p className="text-xs text-muted-foreground">
+              Parul University, Vadodara • A Student-Centric Initiative
+            </p>
           </div>
         </div>
       </div>

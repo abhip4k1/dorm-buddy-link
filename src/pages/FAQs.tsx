@@ -11,19 +11,19 @@ import { useState } from "react";
 
 const faqs = [
   {
-    category: "General",
+    category: "Parul University Hostel - General",
     questions: [
       {
-        q: "What are the hostel timings?",
-        a: "The hostel entry time is 9:00 PM on weekdays and 10:00 PM on weekends. Special permissions are required for late entries. The main gate closes at 11:00 PM.",
+        q: "What are the hostel entry timings at PU?",
+        a: "Hostel entry time is 9:00 PM on weekdays and 10:30 PM on weekends. Gate closes at 11:00 PM. Late entry requires prior approval from the warden via HostelSphere app.",
       },
       {
-        q: "How do I apply for a room change?",
-        a: "Submit a room change request through the hostel office during office hours (9 AM - 5 PM). You'll need to fill out a form stating the reason for the change. Requests are processed within 7 working days.",
+        q: "How do I apply for a room/bed change?",
+        a: "Submit a room change request through HostelSphere → File Complaint → Other. Include your current and preferred room details. The warden reviews requests within 7 working days.",
       },
       {
-        q: "What items are prohibited in the hostel?",
-        a: "Prohibited items include electrical appliances like heaters and irons, alcoholic beverages, tobacco products, pets, and any hazardous materials. Please refer to the hostel handbook for a complete list.",
+        q: "What items are prohibited in PU hostels?",
+        a: "Prohibited: heaters, irons, hot plates, alcohol, tobacco, pets, weapons, and loud speakers. Refer to the PU Hostel Handbook provided at admission for the complete list.",
       },
     ],
   },
@@ -32,15 +32,15 @@ const faqs = [
     questions: [
       {
         q: "Can I skip meals and get a refund?",
-        a: "Meal plans are fixed and non-refundable. However, if you're going home for an extended period (more than 15 days), you can apply for a rebate at the hostel office before leaving.",
+        a: "Mess fees are fixed per semester. For leaves exceeding 15 days, apply for rebate at hostel office before departure with gate pass proof. Partial refunds processed within 30 days.",
       },
       {
         q: "What if I have dietary restrictions?",
-        a: "Inform the mess in-charge about your dietary requirements. We provide vegetarian and non-vegetarian options. For medical dietary needs, submit a medical certificate to the hostel office.",
+        a: "Inform the Azad Bhavan mess in-charge. Both veg and non-veg options available. For medical dietary needs, submit a doctor's certificate to the hostel office.",
       },
       {
         q: "Can guests eat at the mess?",
-        a: "Yes, guests can dine at the mess by purchasing guest meal coupons from the hostel office. The charges are ₹100 per meal for guests.",
+        a: "Yes, guest meal coupons available at hostel office: Breakfast ₹50, Lunch ₹80, Dinner ₹80. Guests must sign the visitor register.",
       },
     ],
   },
@@ -48,29 +48,33 @@ const faqs = [
     category: "Fees & Payments",
     questions: [
       {
-        q: "What are the payment deadlines?",
-        a: "Hostel fees must be paid within the first 15 days of each semester. Late payment attracts a fine of ₹50 per day. Payment can be made online or at the accounts office.",
+        q: "What are the hostel fee deadlines?",
+        a: "Hostel fees due within 15 days of each semester start. Late fee: ₹100/day. Pay online via PU student portal or at the university accounts office.",
       },
       {
         q: "Is the security deposit refundable?",
-        a: "Yes, the security deposit is fully refundable upon completion of your stay, subject to no pending dues and no damage to hostel property. Refunds are processed within 30 days of checkout.",
+        a: "Yes, ₹5000 security deposit is fully refundable upon checkout, subject to no dues and room inspection. Refunds processed within 30-45 days to registered bank account.",
       },
     ],
   },
   {
-    category: "Facilities",
+    category: "Facilities at Azad Bhavan",
     questions: [
       {
         q: "What are the laundry timings?",
-        a: "The laundry facility is open from 7 AM to 8 PM daily. Washing machines are available on a first-come, first-served basis. Each wash cycle costs ₹20.",
+        a: "Laundry room: 7 AM - 8 PM daily. Washing machines available on first-come basis. ₹20 per wash. Iron available at common room, ₹10 per use.",
       },
       {
         q: "How do I report maintenance issues?",
-        a: "Use the 'File Complaint' feature in HostelSphere app. Select 'Maintenance' category and describe the issue. Urgent issues can also be reported to the hostel office directly.",
+        a: "Use HostelSphere → File Complaint → Room & Maintenance. Upload photo proof for faster resolution. Urgent issues: call hostel office at +91 265 2395555.",
+      },
+      {
+        q: "What are the water supply timings?",
+        a: "Hot water: 6-8 AM (winter only). Cold water: 24/7. Water tank refill: 6 AM & 5 PM. Store water during maintenance announcements.",
       },
       {
         q: "Is WiFi available in rooms?",
-        a: "Yes, WiFi is available in all rooms and common areas. Login credentials are provided at check-in. Report connectivity issues through the app or IT helpdesk.",
+        a: "Yes, 100 Mbps WiFi in all rooms. Login: enrollment ID. Password: DOB (DDMMYYYY). Issues? Contact IT helpdesk or report via HostelSphere.",
       },
     ],
   },
@@ -78,12 +82,12 @@ const faqs = [
     category: "Leave & Gate Pass",
     questions: [
       {
-        q: "How many days in advance should I apply for gate pass?",
-        a: "Gate pass requests should be submitted at least 24 hours in advance. For emergency leaves, contact the warden directly.",
+        q: "How far in advance should I apply for gate pass?",
+        a: "Apply at least 24 hours before. Emergency leaves require direct warden approval. Parents receive SMS notification upon gate pass approval.",
       },
       {
         q: "Can I extend my gate pass?",
-        a: "Yes, you can request an extension through the app or by calling the hostel office. Extensions are subject to warden approval.",
+        a: "Yes, request extension via HostelSphere app or call hostel office. Warden approval required. Unapproved overstays attract disciplinary action.",
       },
     ],
   },
@@ -164,14 +168,17 @@ const FAQs = () => {
       <div className="mt-8 p-4 bg-primary/5 rounded-xl border border-primary/20 text-center">
         <p className="text-sm text-foreground font-medium mb-1">Still have questions?</p>
         <p className="text-xs text-muted-foreground mb-3">
-          Contact the hostel office for assistance
+          Contact Azad Bhavan hostel office
         </p>
         <a 
-          href="mailto:hostel@university.edu" 
+          href="mailto:hostel@paruluniversity.ac.in" 
           className="text-sm text-primary font-medium hover:underline"
         >
-          hostel@university.edu
+          hostel@paruluniversity.ac.in
         </a>
+        <p className="text-xs text-muted-foreground mt-2">
+          Office: +91 265 2395555 • Mon-Sat, 9AM-5PM
+        </p>
       </div>
     </Layout>
   );
