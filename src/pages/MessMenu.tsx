@@ -160,9 +160,10 @@ const MessMenu = () => {
 
       {/* Footer Note */}
       <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
-        <p className="text-xs text-muted-foreground text-center">
-          Menu is subject to change based on availability. 
-          For special dietary requirements, please contact the mess in-charge.
+        <p className="text-sm font-medium text-foreground mb-1">Azad Bhavan Mess</p>
+        <p className="text-xs text-muted-foreground">
+          Menu subject to availability. For dietary requirements, contact Mess In-charge.
+          Feedback? Use the HostelSphere Feedback section.
         </p>
       </div>
     </Layout>

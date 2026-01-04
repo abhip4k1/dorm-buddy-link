@@ -11,7 +11,9 @@ import {
   MessageSquare,
   HelpCircle,
   ChevronRight,
-  Building2
+  Building2,
+  Droplets,
+  Clock
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -26,8 +28,14 @@ const Dashboard = () => {
   ];
 
   const recentAnnouncements = [
-    { id: 1, title: "Water supply maintenance tomorrow", time: "2h ago", important: true },
-    { id: 2, title: "Mess timing changed for weekends", time: "5h ago", important: false },
+    { id: 1, title: "Water supply maintenance in Block B tomorrow", time: "2h ago", important: true },
+    { id: 2, title: "Mess timing revised for exam week", time: "5h ago", important: false },
+  ];
+
+  // Facilities info
+  const facilities = [
+    { icon: Droplets, label: "Water Timing", value: "6AM-8AM, 5PM-7PM" },
+    { icon: Clock, label: "Laundry", value: "7AM - 8PM Daily" },
   ];
 
   return (
@@ -35,7 +43,7 @@ const Dashboard = () => {
       {/* Floating SOS Button */}
       <Link 
         to="/emergency"
-        className="fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-destructive shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-200"
+        className="fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-destructive shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-200 animate-pulse"
         aria-label="Emergency SOS"
       >
         <AlertTriangle className="w-6 h-6 text-destructive-foreground" />
@@ -45,12 +53,17 @@ const Dashboard = () => {
       <div className="mb-6">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center">
-            <span className="text-lg font-bold text-primary-foreground">RK</span>
+            <span className="text-lg font-bold text-primary-foreground">AB</span>
           </div>
           <div>
-            <h1 className="text-xl font-bold text-foreground">Hello, Rahul! 👋</h1>
-            <p className="text-sm text-muted-foreground">Room 204 • Block A</p>
+            <h1 className="text-xl font-bold text-foreground">Hello, Abhi! 👋</h1>
+            <p className="text-sm text-muted-foreground">Azad Bhavan B • Room 411, Bed 8</p>
           </div>
+        </div>
+        <div className="mt-3 px-3 py-2 bg-primary/5 rounded-lg border border-primary/20">
+          <p className="text-xs text-muted-foreground">
+            <span className="font-medium text-foreground">B.Tech CSE</span> • 3rd Year • Parul University
+          </p>
         </div>
       </div>
 
@@ -92,6 +105,24 @@ const Dashboard = () => {
         </div>
       </section>
 
+      {/* Quick Facilities Info */}
+      <section className="mb-6">
+        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+          Facilities Today
+        </h2>
+        <div className="grid grid-cols-2 gap-3">
+          {facilities.map((facility, index) => (
+            <div key={index} className="bg-card p-3 rounded-xl shadow-card">
+              <div className="flex items-center gap-2 mb-1">
+                <facility.icon className="w-4 h-4 text-primary" />
+                <p className="text-xs text-muted-foreground">{facility.label}</p>
+              </div>
+              <p className="text-sm font-medium text-foreground">{facility.value}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* More Options */}
       <section>
         <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
@@ -104,7 +135,7 @@ const Dashboard = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">Feedback & Suggestions</p>
-              <p className="text-xs text-muted-foreground">Share your thoughts</p>
+              <p className="text-xs text-muted-foreground">Your voice matters</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </Link>
@@ -114,7 +145,7 @@ const Dashboard = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">FAQs</p>
-              <p className="text-xs text-muted-foreground">Common questions</p>
+              <p className="text-xs text-muted-foreground">Common hostel questions</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </Link>
@@ -124,7 +155,7 @@ const Dashboard = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">About HostelSphere</p>
-              <p className="text-xs text-muted-foreground">Learn more</p>
+              <p className="text-xs text-muted-foreground">A PU Initiative</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </Link>

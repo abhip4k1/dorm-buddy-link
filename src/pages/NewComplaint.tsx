@@ -15,12 +15,15 @@ import {
   X
 } from "lucide-react";
 
+import { Zap, Droplets, Volume2 } from "lucide-react";
+
 const categories = [
-  { id: "maintenance", label: "Maintenance", icon: Wrench, color: "bg-orange-500" },
-  { id: "hygiene", label: "Hygiene", icon: Sparkles, color: "bg-green-500" },
-  { id: "mess", label: "Mess", icon: UtensilsCrossed, color: "bg-yellow-500" },
+  { id: "room-maintenance", label: "Room & Maintenance", icon: Wrench, color: "bg-orange-500" },
+  { id: "cleanliness", label: "Cleanliness", icon: Sparkles, color: "bg-green-500" },
+  { id: "water-electricity", label: "Water / Electricity", icon: Droplets, color: "bg-blue-500" },
+  { id: "noise-discipline", label: "Noise / Discipline", icon: Volume2, color: "bg-purple-500" },
+  { id: "mess", label: "Mess Related", icon: UtensilsCrossed, color: "bg-yellow-500" },
   { id: "security", label: "Security", icon: ShieldAlert, color: "bg-red-500" },
-  { id: "other", label: "Other", icon: HelpCircle, color: "bg-blue-500" },
 ];
 
 const NewComplaint = () => {
@@ -57,17 +60,25 @@ const NewComplaint = () => {
           <div className="w-20 h-20 rounded-full gradient-success flex items-center justify-center mb-6">
             <CheckCircle2 className="w-10 h-10 text-success-foreground" />
           </div>
-          <h2 className="text-xl font-bold text-foreground mb-2">Complaint Submitted!</h2>
+          <h2 className="text-xl font-bold text-foreground mb-2">Complaint Registered!</h2>
           <p className="text-muted-foreground text-center mb-6 max-w-xs">
-            Your complaint has been registered. We'll update you on the progress.
+            Your issue has been officially recorded. Track its progress anytime.
           </p>
           <div className="bg-card p-4 rounded-xl shadow-card mb-6 w-full max-w-xs">
             <p className="text-sm text-muted-foreground">Complaint ID</p>
-            <p className="text-lg font-bold text-foreground">#CMP-2024-0042</p>
+            <p className="text-lg font-bold text-foreground">#PU-HST-2026-0042</p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Azad Bhavan B • Room 411
+            </p>
+          </div>
+          <div className="bg-primary/5 p-3 rounded-lg border border-primary/20 mb-6 max-w-xs">
+            <p className="text-xs text-muted-foreground text-center">
+              ✓ Your issue is officially recorded and traceable
+            </p>
           </div>
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => navigate("/complaints/status")}>
-              View Status
+              Track Status
             </Button>
             <Button onClick={() => navigate("/dashboard")}>
               Back to Home
