@@ -43,7 +43,7 @@ const Dashboard = () => {
       {/* Floating SOS Button */}
       <Link 
         to="/emergency"
-        className="fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-destructive shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-200 animate-pulse"
+        className="fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-destructive shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-200"
         aria-label="Emergency SOS"
       >
         <AlertTriangle className="w-6 h-6 text-destructive-foreground" />
