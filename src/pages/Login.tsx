@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Building2, GraduationCap } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [enrollmentId, setEnrollmentId] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +20,18 @@ const Login = () => {
     // Simulate login delay
     await new Promise(resolve => setTimeout(resolve, 800));
     
-    // For prototype, just redirect to dashboard
-    navigate("/dashboard");
+    // Validate credentials
+    if (enrollmentId === "guest" && password === "demo@123") {
+      navigate("/dashboard");
+    } else {
+      toast({
+        title: "Invalid Credentials",
+        description: "Please use enrollment: guest, password: demo@123",
+        variant: "destructive",
+      });
+    }
+    
+    setIsLoading(false);
   };
 
   return (
