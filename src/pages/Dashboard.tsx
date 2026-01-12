@@ -13,7 +13,8 @@ import {
   ChevronRight,
   Building2,
   Droplets,
-  Clock
+  Clock,
+  Stethoscope
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -21,7 +22,7 @@ const Dashboard = () => {
   const quickActions = [
     { to: "/complaints/new", icon: FileWarning, label: "File Complaint", description: "Report issues", variant: "default" as const },
     { to: "/gate-pass", icon: DoorOpen, label: "Gate Pass", description: "Request exit pass", variant: "default" as const },
-    { to: "/fee-status", icon: CreditCard, label: "Fee Status", description: "View payments", variant: "default" as const },
+    { to: "/health", icon: Stethoscope, label: "Health", description: "Book appointment", variant: "default" as const },
     { to: "/mess-menu", icon: UtensilsCrossed, label: "Mess Menu", description: "Weekly menu", variant: "default" as const },
     { to: "/lost-found", icon: Search, label: "Lost & Found", description: "Report or find items", variant: "default" as const },
     { to: "/announcements", icon: Bell, label: "Announcements", description: "Hostel notices", badge: "3", variant: "default" as const },
