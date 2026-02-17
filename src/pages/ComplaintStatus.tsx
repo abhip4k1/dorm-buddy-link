@@ -1,8 +1,9 @@
 import Layout from "@/components/Layout";
 import StatusBadge from "@/components/StatusBadge";
 import { Link } from "react-router-dom";
-import { Plus, ChevronRight, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { Plus, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const complaints = [
   {
@@ -47,88 +48,85 @@ const complaints = [
 const ComplaintStatus = () => {
   return (
     <Layout title="My Complaints" showBack>
-      {/* New Complaint Button */}
       <Link to="/complaints/new">
-        <Button className="w-full mb-6" size="lg">
+        <Button className="w-full mb-6 rounded-xl gradient-primary shadow-glow" size="lg">
           <Plus className="w-5 h-5" />
           File New Complaint
         </Button>
       </Link>
 
-      {/* Complaints List */}
       <div className="space-y-4">
         {complaints.map((complaint, index) => (
-          <div 
+          <motion.div 
             key={complaint.id}
-            className="bg-card rounded-xl shadow-card overflow-hidden animate-fade-in"
-            style={{ animationDelay: `${index * 100}ms` }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.08 }}
+            className="bg-card rounded-2xl shadow-card border border-border/50 overflow-hidden"
           >
-            {/* Header */}
-            <div className="p-4 border-b border-border">
+            <div className="p-4 border-b border-border/50">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <p className="text-xs text-muted-foreground">{complaint.id}</p>
-                  <p className="text-sm font-semibold text-foreground mt-1">{complaint.title}</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">{complaint.id}</p>
+                  <p className="text-sm font-bold text-foreground mt-1">{complaint.title}</p>
                 </div>
                 <StatusBadge status={complaint.status} />
               </div>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
-                <span className="text-xs px-2 py-1 bg-secondary rounded-full text-muted-foreground">
+                <span className="text-[11px] px-2.5 py-1 bg-secondary/80 rounded-full text-muted-foreground font-semibold">
                   {complaint.category}
                 </span>
-                <span className="text-xs text-muted-foreground">{complaint.date}</span>
+                <span className="text-[11px] text-muted-foreground font-medium">{complaint.date}</span>
               </div>
-              <p className="text-xs text-primary mt-2">📍 {complaint.location}</p>
+              <p className="text-xs text-primary mt-2 font-medium">📍 {complaint.location}</p>
             </div>
 
-            {/* Timeline */}
-            <div className="p-4 bg-secondary/30">
+            <div className="p-4 bg-secondary/20">
               <div className="space-y-3">
                 {complaint.timeline.map((step, stepIndex) => (
                   <div key={stepIndex} className="flex items-start gap-3">
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                       step.completed 
                         ? complaint.status === "resolved" && stepIndex === complaint.timeline.length - 1
-                          ? "bg-success text-success-foreground"
-                          : "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground"
+                          ? "gradient-success"
+                          : "gradient-primary"
+                        : "bg-muted"
                     }`}>
                       {step.completed ? (
                         stepIndex === complaint.timeline.length - 1 && complaint.status === "resolved" ? (
-                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                         ) : (
-                          <Clock className="w-3.5 h-3.5" />
+                          <Clock className="w-3.5 h-3.5 text-white" />
                         )
                       ) : (
-                        <AlertCircle className="w-3.5 h-3.5" />
+                        <AlertCircle className="w-3.5 h-3.5 text-muted-foreground" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm font-medium ${step.completed ? "text-foreground" : "text-muted-foreground"}`}>
+                      <p className={`text-sm font-semibold ${step.completed ? "text-foreground" : "text-muted-foreground"}`}>
                         {step.status}
                       </p>
-                      <p className="text-xs text-muted-foreground">{step.time}</p>
+                      <p className="text-[11px] text-muted-foreground font-medium">{step.time}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {/* Empty State (if no complaints) */}
       {complaints.length === 0 && (
         <div className="text-center py-12">
           <div className="w-16 h-16 rounded-full bg-secondary mx-auto mb-4 flex items-center justify-center">
             <AlertCircle className="w-8 h-8 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground mb-2">No Complaints Yet</h3>
+          <h3 className="text-lg font-bold text-foreground mb-2">No Complaints Yet</h3>
           <p className="text-muted-foreground text-sm mb-6">
             You haven't filed any complaints yet
           </p>
           <Link to="/complaints/new">
-            <Button>File Your First Complaint</Button>
+            <Button className="rounded-xl">File Your First Complaint</Button>
           </Link>
         </div>
       )}

@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import StatusBadge from "@/components/StatusBadge";
-import { Calendar, Plus, ChevronDown, ChevronUp, CheckCircle2 } from "lucide-react";
+import { Calendar, Plus, ChevronUp, CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const existingPasses = [
   {
@@ -56,19 +57,24 @@ const GatePass = () => {
     <Layout title="Gate Pass" showBack>
       {/* Success Toast */}
       {isSuccess && (
-        <div className="fixed top-4 left-4 right-4 z-50 animate-fade-in">
-          <div className="max-w-lg mx-auto bg-success text-success-foreground p-4 rounded-xl shadow-lg flex items-center gap-3">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          className="fixed top-4 left-4 right-4 z-50"
+        >
+          <div className="max-w-lg mx-auto gradient-success text-white p-4 rounded-2xl shadow-lg flex items-center gap-3">
             <CheckCircle2 className="w-5 h-5" />
-            <span className="font-medium">Gate pass request submitted!</span>
+            <span className="font-semibold text-sm">Gate pass request submitted!</span>
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* New Request Button/Form */}
       <div className="mb-6">
         <Button 
           onClick={() => setShowForm(!showForm)}
-          className="w-full"
+          className={`w-full rounded-xl ${!showForm ? 'gradient-primary shadow-glow' : ''}`}
           size="lg"
           variant={showForm ? "outline" : "default"}
         >
@@ -86,24 +92,27 @@ const GatePass = () => {
         </Button>
 
         {showForm && (
-          <form onSubmit={handleSubmit} className="mt-4 p-5 bg-card rounded-xl shadow-card space-y-4 animate-fade-in">
+          <motion.form 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            onSubmit={handleSubmit} 
+            className="mt-4 p-5 bg-card rounded-2xl shadow-card border border-border/50 space-y-4"
+          >
             <div>
-              <Label htmlFor="date" className="text-foreground font-medium mb-2 block">
+              <Label htmlFor="date" className="text-foreground font-semibold text-sm mb-2 block">
                 Select Date *
               </Label>
-              <div className="relative">
-                <Input
-                  id="date"
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="h-12 bg-secondary border-0 focus:ring-2 focus:ring-primary"
-                />
-              </div>
+              <Input
+                id="date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="h-12 bg-secondary/60 border border-border/80 rounded-xl focus:ring-2 focus:ring-primary/30"
+              />
             </div>
 
             <div>
-              <Label htmlFor="reason" className="text-foreground font-medium mb-2 block">
+              <Label htmlFor="reason" className="text-foreground font-semibold text-sm mb-2 block">
                 Reason for Leave *
               </Label>
               <Textarea
@@ -111,66 +120,68 @@ const GatePass = () => {
                 placeholder="Explain why you need to leave the hostel..."
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                className="min-h-[100px] bg-secondary border-0 focus:ring-2 focus:ring-primary resize-none"
+                className="min-h-[100px] bg-secondary/60 border border-border/80 rounded-xl focus:ring-2 focus:ring-primary/30 resize-none"
               />
             </div>
 
             <Button 
               type="submit" 
-              className="w-full"
+              className="w-full rounded-xl gradient-primary"
               disabled={!date || !reason.trim() || isSubmitting}
             >
               {isSubmitting ? (
                 <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   Submitting...
                 </div>
               ) : (
                 "Submit Request"
               )}
             </Button>
-          </form>
+          </motion.form>
         )}
       </div>
 
       {/* Existing Passes */}
       <div>
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+        <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">
           Your Gate Passes
         </h2>
 
         <div className="space-y-3">
           {existingPasses.map((pass, index) => (
-            <div 
+            <motion.div 
               key={pass.id}
-              className="bg-card p-4 rounded-xl shadow-card animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.08 }}
+              className="bg-card p-4 rounded-2xl shadow-card border border-border/50"
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <p className="text-xs text-muted-foreground">{pass.id}</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">{pass.id}</p>
                   <div className="flex items-center gap-2 mt-1">
                     <Calendar className="w-4 h-4 text-primary" />
-                    <span className="font-medium text-foreground">{pass.date}</span>
+                    <span className="font-bold text-foreground text-sm">{pass.date}</span>
                   </div>
                 </div>
                 <StatusBadge status={pass.status} />
               </div>
               <p className="text-sm text-muted-foreground mb-2">{pass.reason}</p>
               {pass.approvedBy && (
-                <p className="text-xs text-success font-medium">
+                <p className="text-xs text-success font-semibold">
                   ✓ Approved by {pass.approvedBy}
                 </p>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
       {/* Info */}
-      <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
-        <p className="text-sm text-foreground font-medium mb-1">Gate Pass Guidelines</p>
-        <ul className="text-xs text-muted-foreground space-y-1">
+      <div className="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/15">
+        <p className="text-sm text-foreground font-bold mb-1">Gate Pass Guidelines</p>
+        <ul className="text-xs text-muted-foreground space-y-1 leading-relaxed">
           <li>• Submit requests at least 24 hours in advance</li>
           <li>• Parents receive SMS upon approval</li>
           <li>• Emergency leaves require warden's direct approval</li>
