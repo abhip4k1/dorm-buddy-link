@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import { AlertTriangle, Bell, Calendar, Megaphone } from "lucide-react";
+import { motion } from "framer-motion";
 
 const announcements = [
   {
@@ -41,7 +42,7 @@ const announcements = [
   {
     id: 5,
     title: "Room Inspection - 4th Floor",
-    content: "Routine room inspection for Azad Bhavan B, 4th Floor on January 8th. Ensure rooms are clean and no prohibited items are present. Warden will accompany.",
+    content: "Routine room inspection for Azad Bhavan B, 4th Floor on January 8th. Ensure rooms are clean and no prohibited items are present.",
     date: "Dec 28, 2025",
     time: "6 days ago",
     important: false,
@@ -59,52 +60,56 @@ const categoryIcons = {
 const Announcements = () => {
   return (
     <Layout title="Announcements" showBack>
-      {/* Important Banner */}
       {announcements.some(a => a.important) && (
-        <div className="gradient-warning rounded-xl p-4 mb-6 flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-warning-foreground flex-shrink-0 mt-0.5" />
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="gradient-warning rounded-2xl p-4 mb-6 flex items-start gap-3"
+        >
+          <AlertTriangle className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
           <div>
-            <p className="font-semibold text-warning-foreground text-sm">Important Updates</p>
-            <p className="text-warning-foreground/80 text-xs mt-1">
+            <p className="font-bold text-white text-sm">Important Updates</p>
+            <p className="text-white/70 text-xs mt-0.5 font-medium">
               {announcements.filter(a => a.important).length} important notice(s) require your attention
             </p>
           </div>
-        </div>
+        </motion.div>
       )}
 
-      {/* Announcements List */}
-      <div className="space-y-4">
+      <div className="space-y-3.5">
         {announcements.map((announcement, index) => {
           const Icon = categoryIcons[announcement.category as keyof typeof categoryIcons] || Bell;
           
           return (
-            <div 
+            <motion.div 
               key={announcement.id}
-              className={`bg-card rounded-xl shadow-card overflow-hidden animate-fade-in ${
-                announcement.important ? "ring-2 ring-accent/50" : ""
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.06 }}
+              className={`bg-card rounded-2xl shadow-card border overflow-hidden ${
+                announcement.important ? "border-accent/30" : "border-border/50"
               }`}
-              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="p-4">
                 <div className="flex items-start gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                     announcement.important 
                       ? "gradient-accent" 
-                      : "bg-primary/10"
+                      : "bg-primary/8"
                   }`}>
                     {announcement.important ? (
-                      <AlertTriangle className="w-5 h-5 text-accent-foreground" />
+                      <AlertTriangle className="w-5 h-5 text-white" />
                     ) : (
                       <Icon className="w-5 h-5 text-primary" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-semibold text-foreground text-sm">
+                      <h3 className="font-bold text-foreground text-sm leading-snug">
                         {announcement.title}
                       </h3>
                       {announcement.important && (
-                        <span className="px-2 py-0.5 text-xs font-semibold rounded-full gradient-accent text-accent-foreground flex-shrink-0">
+                        <span className="px-2 py-0.5 text-[10px] font-bold rounded-full gradient-accent text-white flex-shrink-0">
                           Important
                         </span>
                       )}
@@ -112,7 +117,7 @@ const Announcements = () => {
                     <p className="text-muted-foreground text-sm mt-2 leading-relaxed">
                       {announcement.content}
                     </p>
-                    <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2 mt-3 text-[11px] text-muted-foreground font-medium">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{announcement.date}</span>
                       <span className="text-border">•</span>
@@ -121,7 +126,7 @@ const Announcements = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

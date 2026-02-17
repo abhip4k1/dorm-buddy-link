@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
-import { UtensilsCrossed, Coffee, Sun, Moon } from "lucide-react";
+import { Coffee, Sun, Moon } from "lucide-react";
+import { motion } from "framer-motion";
 
 const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const fullDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -43,9 +44,15 @@ const menuData: Record<string, { breakfast: string[], lunch: string[], dinner: s
   },
 };
 
+const meals = [
+  { key: "breakfast" as const, label: "Breakfast", time: "7:30 - 9:30 AM", icon: Coffee, gradient: "gradient-warning" },
+  { key: "lunch" as const, label: "Lunch", time: "12:30 - 2:30 PM", icon: Sun, gradient: "gradient-accent" },
+  { key: "dinner" as const, label: "Dinner", time: "7:30 - 9:30 PM", icon: Moon, gradient: "gradient-primary" },
+];
+
 const MessMenu = () => {
   const today = new Date().getDay();
-  const currentDayIndex = today === 0 ? 6 : today - 1; // Adjust for Sunday
+  const currentDayIndex = today === 0 ? 6 : today - 1;
   const [selectedDay, setSelectedDay] = useState(weekDays[currentDayIndex]);
 
   const menu = menuData[selectedDay];
@@ -54,27 +61,31 @@ const MessMenu = () => {
     <Layout title="Mess Menu" showBack>
       {/* Day Selector */}
       <div className="mb-6">
-        <div className="flex gap-1.5 overflow-x-auto pb-2 -mx-1 px-1">
-          {weekDays.map((day, index) => (
-            <button
-              key={day}
-              onClick={() => setSelectedDay(day)}
-              className={`flex-shrink-0 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
-                selectedDay === day
-                  ? "gradient-primary text-primary-foreground shadow-md"
-                  : index === currentDayIndex
-                  ? "bg-primary/10 text-primary border-2 border-primary/30"
-                  : "bg-card text-foreground hover:bg-secondary"
-              }`}
-            >
-              {day}
-              {index === currentDayIndex && selectedDay !== day && (
-                <span className="block text-[10px] font-normal mt-0.5">Today</span>
-              )}
-            </button>
-          ))}
+        <div className="flex gap-1.5 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+          {weekDays.map((day, index) => {
+            const isSelected = selectedDay === day;
+            const isToday = index === currentDayIndex;
+            return (
+              <button
+                key={day}
+                onClick={() => setSelectedDay(day)}
+                className={`flex-shrink-0 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                  isSelected
+                    ? "gradient-primary text-white shadow-glow"
+                    : isToday
+                    ? "bg-primary/10 text-primary border-2 border-primary/30"
+                    : "bg-card text-foreground hover:bg-secondary border border-border/50"
+                }`}
+              >
+                {day}
+                {isToday && !isSelected && (
+                  <span className="block text-[9px] font-bold mt-0.5 uppercase tracking-wider">Today</span>
+                )}
+              </button>
+            );
+          })}
         </div>
-        <p className="text-sm text-muted-foreground mt-3 text-center">
+        <p className="text-sm text-muted-foreground mt-3 text-center font-medium">
           {fullDays[weekDays.indexOf(selectedDay)]}
           {selectedDay === weekDays[currentDayIndex] && " (Today)"}
         </p>
@@ -82,88 +93,44 @@ const MessMenu = () => {
 
       {/* Menu Cards */}
       <div className="space-y-4">
-        {/* Breakfast */}
-        <div className="bg-card rounded-xl shadow-card overflow-hidden animate-fade-in">
-          <div className="gradient-warning p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-warning-foreground/20 flex items-center justify-center">
-              <Coffee className="w-5 h-5 text-warning-foreground" />
+        {meals.map((meal, index) => (
+          <motion.div
+            key={meal.key}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-card rounded-2xl shadow-card border border-border/50 overflow-hidden"
+          >
+            <div className={`${meal.gradient} p-4 flex items-center gap-3`}>
+              <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                <meal.icon className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-bold text-white">{meal.label}</h3>
+                <p className="text-xs text-white/70 font-medium">{meal.time}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold text-warning-foreground">Breakfast</h3>
-              <p className="text-xs text-warning-foreground/80">7:30 AM - 9:30 AM</p>
+            <div className="p-4">
+              <div className="flex flex-wrap gap-2">
+                {menu[meal.key].map((item, i) => (
+                  <span 
+                    key={i}
+                    className="px-3 py-1.5 bg-secondary/70 rounded-full text-sm text-foreground font-medium border border-border/30"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="p-4">
-            <div className="flex flex-wrap gap-2">
-              {menu.breakfast.map((item, i) => (
-                <span 
-                  key={i}
-                  className="px-3 py-1.5 bg-secondary rounded-full text-sm text-foreground"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Lunch */}
-        <div className="bg-card rounded-xl shadow-card overflow-hidden animate-fade-in" style={{ animationDelay: "100ms" }}>
-          <div className="gradient-accent p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-accent-foreground/20 flex items-center justify-center">
-              <Sun className="w-5 h-5 text-accent-foreground" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-accent-foreground">Lunch</h3>
-              <p className="text-xs text-accent-foreground/80">12:30 PM - 2:30 PM</p>
-            </div>
-          </div>
-          <div className="p-4">
-            <div className="flex flex-wrap gap-2">
-              {menu.lunch.map((item, i) => (
-                <span 
-                  key={i}
-                  className="px-3 py-1.5 bg-secondary rounded-full text-sm text-foreground"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Dinner */}
-        <div className="bg-card rounded-xl shadow-card overflow-hidden animate-fade-in" style={{ animationDelay: "200ms" }}>
-          <div className="gradient-primary p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
-              <Moon className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-primary-foreground">Dinner</h3>
-              <p className="text-xs text-primary-foreground/80">7:30 PM - 9:30 PM</p>
-            </div>
-          </div>
-          <div className="p-4">
-            <div className="flex flex-wrap gap-2">
-              {menu.dinner.map((item, i) => (
-                <span 
-                  key={i}
-                  className="px-3 py-1.5 bg-secondary rounded-full text-sm text-foreground"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+          </motion.div>
+        ))}
       </div>
 
       {/* Footer Note */}
-      <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
-        <p className="text-sm font-medium text-foreground mb-1">Azad Bhavan Mess</p>
-        <p className="text-xs text-muted-foreground">
+      <div className="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/15">
+        <p className="text-sm font-bold text-foreground mb-1">Azad Bhavan Mess</p>
+        <p className="text-xs text-muted-foreground leading-relaxed">
           Menu subject to availability. For dietary requirements, contact Mess In-charge.
-          Feedback? Use the HostelSphere Feedback section.
         </p>
       </div>
     </Layout>
