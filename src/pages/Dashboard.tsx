@@ -1,5 +1,4 @@
 import Layout from "@/components/Layout";
-import QuickAccessCard from "@/components/QuickAccessCard";
 import { 
   FileWarning, 
   DoorOpen, 
@@ -14,29 +13,24 @@ import {
   Droplets,
   Clock,
   Stethoscope,
-  Sparkles
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Dashboard = () => {
   const quickActions = [
-    { to: "/complaints/new", icon: FileWarning, label: "File Complaint", description: "Report issues", variant: "default" as const },
-    { to: "/gate-pass", icon: DoorOpen, label: "Gate Pass", description: "Request exit pass", variant: "default" as const },
-    { to: "/health", icon: Stethoscope, label: "Health", description: "Book appointment", variant: "default" as const },
-    { to: "/mess-menu", icon: UtensilsCrossed, label: "Mess Menu", description: "Weekly menu", variant: "default" as const },
-    { to: "/lost-found", icon: Search, label: "Lost & Found", description: "Report or find items", variant: "default" as const },
-    { to: "/announcements", icon: Bell, label: "Announcements", description: "Hostel notices", badge: "3", variant: "default" as const },
+    { to: "/complaints/new", icon: FileWarning, label: "Complaints", emoji: "📝", bg: "bg-orange-50", iconBg: "bg-orange-100", iconColor: "text-orange-500" },
+    { to: "/gate-pass", icon: DoorOpen, label: "Gate Pass", emoji: "🚪", bg: "bg-blue-50", iconBg: "bg-blue-100", iconColor: "text-blue-500" },
+    { to: "/health", icon: Stethoscope, label: "Health", emoji: "🏥", bg: "bg-emerald-50", iconBg: "bg-emerald-100", iconColor: "text-emerald-500" },
+    { to: "/mess-menu", icon: UtensilsCrossed, label: "Mess Menu", emoji: "🍽️", bg: "bg-amber-50", iconBg: "bg-amber-100", iconColor: "text-amber-500" },
+    { to: "/lost-found", icon: Search, label: "Lost & Found", emoji: "🔍", bg: "bg-purple-50", iconBg: "bg-purple-100", iconColor: "text-purple-500" },
+    { to: "/fee-status", icon: CreditCard, label: "Fee Status", emoji: "💳", bg: "bg-pink-50", iconBg: "bg-pink-100", iconColor: "text-pink-500" },
   ];
 
-  const recentAnnouncements = [
-    { id: 1, title: "Water supply maintenance in Block B tomorrow", time: "2h ago", important: true },
-    { id: 2, title: "Mess timing revised for exam week", time: "5h ago", important: false },
-  ];
-
-  const facilities = [
-    { icon: Droplets, label: "Water Timing", value: "6AM-8AM, 5PM-7PM" },
-    { icon: Clock, label: "Laundry", value: "7AM - 8PM Daily" },
+  const recentUpdates = [
+    { id: 1, title: "Water supply maintenance in Block B tomorrow", time: "2h ago", type: "⚠️" },
+    { id: 2, title: "Mess timing revised for exam week", time: "5h ago", type: "🍽️" },
+    { id: 3, title: "Hostel Sports Week registration open", time: "1d ago", type: "🏏" },
   ];
 
   return (
@@ -54,128 +48,141 @@ const Dashboard = () => {
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-7"
+        className="mb-6"
       >
-        <div className="relative gradient-hero rounded-3xl p-5 overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/5 -mr-8 -mt-8" />
-          <div className="absolute bottom-0 left-0 w-20 h-20 rounded-full bg-white/5 -ml-4 -mb-4" />
+        <div className="relative gradient-hero rounded-2xl p-5 overflow-hidden">
+          <div className="absolute top-0 right-0 w-28 h-28 rounded-full bg-white/5 -mr-6 -mt-6" />
+          <div className="absolute bottom-0 left-0 w-16 h-16 rounded-full bg-white/5 -ml-4 -mb-4" />
           
-          <div className="relative z-10">
-            <div className="flex items-center gap-3.5 mb-3">
-              <div className="w-13 h-13 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
-                <span className="text-lg font-extrabold text-white">AB</span>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-white">Hello, Abhi! 👋</h1>
-                <p className="text-sm text-white/60 font-medium">Azad Bhavan B • Room 411</p>
-              </div>
+          <div className="relative z-10 flex items-center gap-3.5">
+            <div className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center text-xl font-extrabold text-white">
+              AB
             </div>
-            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-white/10 rounded-xl backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5 text-white/60" />
-              <p className="text-xs text-white/70 font-medium">
-                <span className="text-white/90 font-semibold">B.Tech CSE</span> • 3rd Year • Parul University
-              </p>
+            <div className="flex-1">
+              <h1 className="text-lg font-bold text-white">Hello, Abhi! 👋</h1>
+              <p className="text-xs text-white/60 font-medium">Azad Bhavan B • Room 411</p>
+              <p className="text-[11px] text-white/40 font-medium mt-0.5">B.Tech CSE • 3rd Year</p>
             </div>
           </div>
         </div>
       </motion.div>
 
       {/* Quick Access Grid */}
-      <section className="mb-7">
-        <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
+      <section className="mb-6">
+        <h2 className="text-sm font-bold text-foreground mb-3">Quick Actions</h2>
+        <div className="grid grid-cols-3 gap-3">
           {quickActions.map((action, idx) => (
-            <QuickAccessCard key={action.to} {...action} index={idx} />
+            <motion.div
+              key={action.to}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: idx * 0.04, duration: 0.25 }}
+            >
+              <Link
+                to={action.to}
+                className={`block p-3.5 rounded-2xl ${action.bg} border border-border/30 hover:shadow-md active:scale-[0.97] transition-all duration-200 text-center`}
+              >
+                <div className={`w-11 h-11 rounded-xl ${action.iconBg} flex items-center justify-center mx-auto mb-2`}>
+                  <action.icon className={`w-5 h-5 ${action.iconColor}`} />
+                </div>
+                <p className="text-xs font-bold text-foreground leading-tight">{action.label}</p>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Recent Announcements */}
-      <section className="mb-7">
+      {/* Announcements Banner */}
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.25 }}
+      >
+        <Link to="/announcements" className="block mb-6">
+          <div className="bg-amber-50 border border-amber-200/60 rounded-2xl p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+              <Bell className="w-5 h-5 text-amber-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-foreground">3 New Announcements</p>
+              <p className="text-xs text-muted-foreground font-medium truncate">Water supply maintenance tomorrow...</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-muted-foreground/50 flex-shrink-0" />
+          </div>
+        </Link>
+      </motion.div>
+
+      {/* Recent Updates */}
+      <section className="mb-6">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-            Recent Updates
-          </h2>
-          <Link to="/announcements" className="text-xs text-primary font-semibold hover:text-primary/80 transition-colors">
-            View All
+          <h2 className="text-sm font-bold text-foreground">Recent Updates</h2>
+          <Link to="/announcements" className="text-xs text-primary font-semibold">
+            See All
           </Link>
         </div>
-        <div className="space-y-2.5">
-          {recentAnnouncements.map((announcement, index) => (
+        <div className="bg-card rounded-2xl border border-border/60 divide-y divide-border/40 overflow-hidden">
+          {recentUpdates.map((update, index) => (
             <motion.div
-              key={announcement.id}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              className="bg-card p-4 rounded-2xl shadow-card border border-border/50 flex items-start gap-3 hover:shadow-card-hover transition-shadow duration-300"
+              key={update.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 + index * 0.06 }}
+              className="flex items-center gap-3 p-3.5"
             >
-              <div className={`w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 ${
-                announcement.important ? "bg-accent shadow-glow-accent" : "bg-muted-foreground/30"
-              }`} />
+              <span className="text-lg flex-shrink-0">{update.type}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-foreground leading-snug">{announcement.title}</p>
-                <p className="text-[11px] text-muted-foreground mt-1 font-medium">{announcement.time}</p>
+                <p className="text-sm font-medium text-foreground leading-snug truncate">{update.title}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{update.time}</p>
               </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Facilities */}
-      <section className="mb-7">
-        <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">
-          Facilities Today
-        </h2>
+      {/* Facilities Today */}
+      <section className="mb-6">
+        <h2 className="text-sm font-bold text-foreground mb-3">Today's Schedule</h2>
         <div className="grid grid-cols-2 gap-3">
-          {facilities.map((facility, index) => (
+          {[
+            { icon: Droplets, label: "Water", value: "6-8 AM, 5-7 PM", color: "text-blue-500", bg: "bg-blue-50" },
+            { icon: Clock, label: "Laundry", value: "7 AM - 8 PM", color: "text-teal-500", bg: "bg-teal-50" },
+          ].map((facility, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + index * 0.1 }}
-              className="bg-card p-4 rounded-2xl shadow-card border border-border/50"
+              transition={{ delay: 0.45 + index * 0.06 }}
+              className={`${facility.bg} rounded-2xl p-3.5 border border-border/30`}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-primary/8 flex items-center justify-center">
-                  <facility.icon className="w-4 h-4 text-primary" />
-                </div>
-                <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider">{facility.label}</p>
-              </div>
-              <p className="text-sm font-bold text-foreground">{facility.value}</p>
+              <facility.icon className={`w-5 h-5 ${facility.color} mb-2`} />
+              <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider">{facility.label}</p>
+              <p className="text-sm font-bold text-foreground mt-0.5">{facility.value}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* More Options */}
-      <section>
-        <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">
-          More Options
-        </h2>
-        <div className="bg-card rounded-2xl shadow-card border border-border/50 divide-y divide-border/50 overflow-hidden">
+      <section className="mb-4">
+        <h2 className="text-sm font-bold text-foreground mb-3">More</h2>
+        <div className="bg-card rounded-2xl border border-border/60 divide-y divide-border/40 overflow-hidden">
           {[
-            { to: "/feedback", icon: MessageSquare, label: "Feedback & Suggestions", desc: "Your voice matters" },
-            { to: "/faqs", icon: HelpCircle, label: "FAQs", desc: "Common hostel questions" },
-            { to: "/fee-status", icon: CreditCard, label: "Fee Status", desc: "Track payments" },
+            { to: "/feedback", icon: MessageSquare, label: "Feedback", desc: "Share your thoughts", emoji: "💬" },
+            { to: "/faqs", icon: HelpCircle, label: "FAQs", desc: "Common questions", emoji: "❓" },
           ].map((item, index) => (
             <motion.div
               key={item.to}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 + index * 0.05 }}
+              transition={{ delay: 0.55 + index * 0.05 }}
             >
-              <Link to={item.to} className="flex items-center gap-3.5 p-4 hover:bg-secondary/50 transition-all duration-200 group">
-                <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <item.icon className="w-5 h-5 text-primary" />
-                </div>
+              <Link to={item.to} className="flex items-center gap-3 p-3.5 hover:bg-secondary/40 transition-colors group">
+                <span className="text-lg">{item.emoji}</span>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-foreground">{item.label}</p>
-                  <p className="text-[11px] text-muted-foreground font-medium">{item.desc}</p>
+                  <p className="text-[11px] text-muted-foreground">{item.desc}</p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground/50 group-hover:text-muted-foreground group-hover:translate-x-0.5 transition-all" />
+                <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-muted-foreground group-hover:translate-x-0.5 transition-all" />
               </Link>
             </motion.div>
           ))}
