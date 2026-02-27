@@ -152,11 +152,6 @@ const Login = () => {
               </Button>
             </form>
 
-            <div className="mt-5 pt-4 border-t border-border/50">
-              <p className="text-center text-xs text-muted-foreground">
-                Demo: <span className="font-bold text-foreground">guest</span> / <span className="font-bold text-foreground">demo@123</span>
-              </p>
-            </div>
           </div>
 
           {/* Contact footer */}
