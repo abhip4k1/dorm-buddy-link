@@ -48,7 +48,7 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
       )}
 
       {/* Main Content */}
-      <main className="flex-1 pb-24 md:pb-8">
+      <main className={`flex-1 pb-24 md:pb-8 ${showNav ? 'md:pt-16' : ''}`}>
         <div className="w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12 py-4 md:py-6 lg:py-8">
           <AnimatePresence mode="wait">
             <motion.div
