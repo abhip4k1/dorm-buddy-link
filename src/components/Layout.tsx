@@ -31,7 +31,7 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
       {/* Header */}
       {(title || showBack) && (
         <header className="sticky top-0 z-50 bg-card/90 backdrop-blur-lg border-b border-border/50">
-          <div className="max-w-lg mx-auto flex items-center gap-3 px-5 py-3">
+          <div className="w-full max-w-7xl mx-auto flex items-center gap-3 px-5 md:px-8 lg:px-12 py-3 md:py-4">
             {showBack && (
               <Link 
                 to="/dashboard" 
@@ -41,15 +41,15 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
               </Link>
             )}
             {title && (
-              <h1 className="text-base font-bold text-foreground tracking-tight">{title}</h1>
+              <h1 className="text-base md:text-lg lg:text-xl font-bold text-foreground tracking-tight">{title}</h1>
             )}
           </div>
         </header>
       )}
 
       {/* Main Content */}
-      <main className="flex-1 pb-24">
-        <div className="max-w-lg mx-auto px-5 py-4">
+      <main className={`flex-1 pb-24 md:pb-8 ${showNav ? 'md:pt-16' : ''}`}>
+        <div className="w-full max-w-7xl mx-auto px-5 md:px-8 lg:px-12 py-4 md:py-6 lg:py-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -63,11 +63,11 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
         </div>
       </main>
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation - mobile only */}
       {showNav && (
-        <nav className="fixed bottom-0 left-0 right-0 z-50">
+        <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
           <div className="bg-card/95 backdrop-blur-lg border-t border-border/50">
-            <div className="max-w-lg mx-auto flex justify-around items-center px-2 py-1.5">
+            <div className="flex justify-around items-center px-2 py-1.5">
               {navItems.map((item) => {
                 const isActive = location.pathname.startsWith(item.path);
                 return (
@@ -99,6 +99,34 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
             </div>
           </div>
           <div className="h-[env(safe-area-inset-bottom)] bg-card/95" />
+        </nav>
+      )}
+
+      {/* Desktop Sidebar/Top Navigation */}
+      {showNav && (
+        <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border/50">
+          <div className="max-w-7xl mx-auto flex items-center justify-between px-8 lg:px-12 py-3">
+            <Link to="/dashboard" className="text-lg font-extrabold text-foreground tracking-tight">
+              HostelSphere
+            </Link>
+            <div className="flex items-center gap-1">
+              {navItems.map((item) => {
+                const isActive = location.pathname.startsWith(item.path);
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`relative flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 text-sm font-semibold ${
+                      isActive ? "text-primary bg-primary/8" : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
+                    }`}
+                  >
+                    <item.icon className="w-4 h-4" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
         </nav>
       )}
     </div>

@@ -35,46 +35,46 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      {/* Top Section with illustration area */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-[hsl(230,65%,48%)] pt-12 pb-16 px-6">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-background">
+      {/* Top/Left Section with illustration area */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-[hsl(230,65%,48%)] pt-12 pb-16 px-6 lg:w-1/2 lg:min-h-screen lg:flex lg:items-center lg:pb-12">
         {/* Decorative shapes */}
-        <div className="absolute top-6 right-6 w-20 h-20 rounded-full border-2 border-white/10" />
-        <div className="absolute top-16 right-16 w-8 h-8 rounded-full bg-white/10" />
-        <div className="absolute bottom-8 left-6 w-14 h-14 rounded-2xl bg-white/5 rotate-12" />
+        <div className="absolute top-6 right-6 w-20 h-20 lg:w-32 lg:h-32 rounded-full border-2 border-white/10" />
+        <div className="absolute top-16 right-16 w-8 h-8 lg:w-14 lg:h-14 rounded-full bg-white/10" />
+        <div className="absolute bottom-8 left-6 w-14 h-14 lg:w-24 lg:h-24 rounded-2xl bg-white/5 rotate-12" />
         
         <motion.div 
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative z-10 max-w-lg mx-auto"
+          className="relative z-10 w-full max-w-lg mx-auto lg:max-w-xl"
         >
-          <div className="flex items-center gap-3 mb-10">
-            <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
-              <GraduationCap className="w-6 h-6 text-white" />
+          <div className="flex items-center gap-3 mb-10 lg:mb-14">
+            <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-2xl bg-white/15 flex items-center justify-center">
+              <GraduationCap className="w-6 h-6 lg:w-8 lg:h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-white tracking-tight">HostelSphere</h1>
-              <p className="text-white/50 text-xs font-semibold">Parul University</p>
+              <h1 className="text-xl lg:text-3xl font-extrabold text-white tracking-tight">HostelSphere</h1>
+              <p className="text-white/50 text-xs lg:text-sm font-semibold">Parul University</p>
             </div>
           </div>
           
-          <h2 className="text-white text-3xl font-bold leading-tight mb-1">
+          <h2 className="text-white text-3xl lg:text-5xl font-bold leading-tight mb-1 lg:mb-3">
             Welcome Back! 👋
           </h2>
-          <p className="text-white/50 text-sm font-medium">
+          <p className="text-white/50 text-sm lg:text-lg font-medium">
             Sign in to your hostel account
           </p>
 
           {/* Feature chips */}
-          <div className="flex gap-2 mt-5 flex-wrap">
+          <div className="flex gap-2 md:gap-3 mt-5 lg:mt-8 flex-wrap">
             {[
               { icon: Shield, text: "Secure" },
               { icon: Wifi, text: "24/7 Access" },
               { icon: Building2, text: "Smart Campus" },
             ].map((chip) => (
-              <div key={chip.text} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-white/70 text-[11px] font-semibold">
-                <chip.icon className="w-3 h-3" />
+              <div key={chip.text} className="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/10 text-white/70 text-[11px] md:text-sm font-semibold">
+                <chip.icon className="w-3 h-3 md:w-4 md:h-4" />
                 {chip.text}
               </div>
             ))}
@@ -82,18 +82,18 @@ const Login = () => {
         </motion.div>
       </div>
 
-      {/* Form Section - pulled up over the hero */}
-      <div className="flex-1 px-5 -mt-6 relative z-10">
+      {/* Form Section */}
+      <div className="flex-1 px-5 -mt-6 lg:mt-0 relative z-10 lg:flex lg:items-center lg:justify-center lg:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="max-w-lg mx-auto"
+          className="w-full max-w-lg mx-auto lg:max-w-md"
         >
-          <div className="bg-card rounded-2xl shadow-lg p-6 border border-border/60">
-            <form onSubmit={handleLogin} className="space-y-4">
+          <div className="bg-card rounded-2xl shadow-lg p-6 md:p-8 lg:p-10 border border-border/60">
+            <form onSubmit={handleLogin} className="space-y-4 md:space-y-5">
               <div className="space-y-1.5">
-                <Label htmlFor="enrollmentId" className="text-foreground font-semibold text-sm">
+                <Label htmlFor="enrollmentId" className="text-foreground font-semibold text-sm md:text-base">
                   Enrollment ID
                 </Label>
                 <Input
@@ -102,12 +102,12 @@ const Login = () => {
                   placeholder="e.g. 2303031240145 or guest"
                   value={enrollmentId}
                   onChange={(e) => setEnrollmentId(e.target.value)}
-                  className="h-12 bg-background border border-border rounded-xl text-sm px-4"
+                  className="h-12 md:h-14 bg-background border border-border rounded-xl text-sm md:text-base px-4"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="password" className="text-foreground font-semibold text-sm">
+                <Label htmlFor="password" className="text-foreground font-semibold text-sm md:text-base">
                   Password
                 </Label>
                 <div className="relative">
@@ -117,7 +117,7 @@ const Login = () => {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="h-12 bg-background border border-border rounded-xl text-sm px-4 pr-12"
+                    className="h-12 md:h-14 bg-background border border-border rounded-xl text-sm md:text-base px-4 pr-12"
                   />
                   <button 
                     type="button"
@@ -130,7 +130,7 @@ const Login = () => {
               </div>
 
               <div className="flex justify-end">
-                <button type="button" className="text-xs text-primary font-semibold">
+                <button type="button" className="text-xs md:text-sm text-primary font-semibold">
                   Forgot Password?
                 </button>
               </div>
@@ -138,7 +138,7 @@ const Login = () => {
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full h-12 rounded-xl gradient-primary text-base font-bold shadow-glow"
+                className="w-full h-12 md:h-14 rounded-xl gradient-primary text-base font-bold shadow-glow"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -151,22 +151,21 @@ const Login = () => {
                 )}
               </Button>
             </form>
-
           </div>
 
           {/* Contact footer */}
           <div className="mt-4 flex gap-3">
-            <div className="flex-1 bg-card rounded-xl p-3 border border-border/60">
-              <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Hostel Office</p>
-              <p className="text-xs font-bold text-foreground mt-0.5">+91 265 2395555</p>
+            <div className="flex-1 bg-card rounded-xl p-3 md:p-4 border border-border/60">
+              <p className="text-[10px] md:text-xs text-muted-foreground font-semibold uppercase tracking-wider">Hostel Office</p>
+              <p className="text-xs md:text-sm font-bold text-foreground mt-0.5">+91 265 2395555</p>
             </div>
-            <div className="flex-1 bg-card rounded-xl p-3 border border-border/60">
-              <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Email</p>
-              <p className="text-xs font-bold text-foreground mt-0.5 truncate">hostel@pu.ac.in</p>
+            <div className="flex-1 bg-card rounded-xl p-3 md:p-4 border border-border/60">
+              <p className="text-[10px] md:text-xs text-muted-foreground font-semibold uppercase tracking-wider">Email</p>
+              <p className="text-xs md:text-sm font-bold text-foreground mt-0.5 truncate">hostel@pu.ac.in</p>
             </div>
           </div>
 
-          <p className="text-center text-[10px] text-muted-foreground mt-5 pb-6">
+          <p className="text-center text-[10px] md:text-xs text-muted-foreground mt-5 pb-6">
             Parul University, Vadodara • © 2026
           </p>
         </motion.div>
