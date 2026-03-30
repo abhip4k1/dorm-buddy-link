@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          is_important: boolean
+          title: string
+        }
+        Insert: {
+          category?: string
+          content: string
+          created_at?: string
+          id?: string
+          is_important?: boolean
+          title: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_important?: boolean
+          title?: string
+        }
+        Relationships: []
+      }
       appointments: {
         Row: {
           appointment_id: string
@@ -67,6 +94,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      complaints: {
+        Row: {
+          category: string
+          complaint_id: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          complaint_id: string
+          created_at?: string
+          description: string
+          id?: string
+          image_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          complaint_id?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       doctor_slots: {
         Row: {
@@ -133,6 +196,204 @@ export type Database = {
           name?: string
           profile_image?: string | null
           qualification?: string | null
+        }
+        Relationships: []
+      }
+      emergency_alerts: {
+        Row: {
+          alert_type: string
+          created_at: string
+          id: string
+          location: string | null
+          message: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          alert_type?: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          message?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          alert_type?: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          message?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      fee_records: {
+        Row: {
+          amount: number
+          breakdown: Json | null
+          created_at: string
+          due_date: string | null
+          id: string
+          paid_date: string | null
+          semester: string
+          status: string
+          transaction_id: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          breakdown?: Json | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          paid_date?: string | null
+          semester: string
+          status?: string
+          transaction_id?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          breakdown?: Json | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          paid_date?: string | null
+          semester?: string
+          status?: string
+          transaction_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      feedback: {
+        Row: {
+          created_at: string
+          id: string
+          is_anonymous: boolean
+          message: string
+          satisfaction: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_anonymous?: boolean
+          message: string
+          satisfaction: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_anonymous?: boolean
+          message?: string
+          satisfaction?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      gate_passes: {
+        Row: {
+          approved_by: string | null
+          created_at: string
+          departure_date: string
+          id: string
+          pass_id: string
+          reason: string
+          return_date: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          approved_by?: string | null
+          created_at?: string
+          departure_date: string
+          id?: string
+          pass_id: string
+          reason: string
+          return_date?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          approved_by?: string | null
+          created_at?: string
+          departure_date?: string
+          id?: string
+          pass_id?: string
+          reason?: string
+          return_date?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      lost_found_items: {
+        Row: {
+          contact_info: string | null
+          created_at: string
+          description: string
+          id: string
+          is_resolved: boolean
+          item_name: string
+          item_type: string
+          location: string
+          user_id: string | null
+        }
+        Insert: {
+          contact_info?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          is_resolved?: boolean
+          item_name: string
+          item_type?: string
+          location: string
+          user_id?: string | null
+        }
+        Update: {
+          contact_info?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          is_resolved?: boolean
+          item_name?: string
+          item_type?: string
+          location?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      mess_menu: {
+        Row: {
+          created_at: string
+          day_of_week: string
+          id: string
+          items: string[]
+          meal_type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day_of_week: string
+          id?: string
+          items?: string[]
+          meal_type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day_of_week?: string
+          id?: string
+          items?: string[]
+          meal_type?: string
+          updated_at?: string
         }
         Relationships: []
       }
