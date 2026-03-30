@@ -101,12 +101,12 @@ const Login = () => {
             <form onSubmit={handleLogin} className="space-y-4 md:space-y-5">
               <div className="space-y-1.5">
                 <Label htmlFor="enrollmentId" className="text-foreground font-semibold text-sm md:text-base">
-                  Enrollment ID
+                  Email
                 </Label>
                 <Input
                   id="enrollmentId"
-                  type="text"
-                  placeholder="e.g. 2303031240145 or guest"
+                  type="email"
+                  placeholder="you@example.com"
                   value={enrollmentId}
                   onChange={(e) => setEnrollmentId(e.target.value)}
                   className="h-12 md:h-14 bg-background border border-border rounded-xl text-sm md:text-base px-4"
@@ -157,6 +157,13 @@ const Login = () => {
                   "Sign In"
                 )}
               </Button>
+
+              <p className="text-center text-sm text-muted-foreground">
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-primary font-semibold hover:underline">
+                  Sign Up
+                </Link>
+              </p>
             </form>
           </div>
 
