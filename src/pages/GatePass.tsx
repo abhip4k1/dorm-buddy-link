@@ -1,76 +1,83 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import StatusBadge from "@/components/StatusBadge";
-import { Calendar, Plus, ChevronUp, CheckCircle2 } from "lucide-react";
+import { Calendar, Plus, ChevronUp, CheckCircle2, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
-const existingPasses = [
-  {
-    id: "GP-PU-2026-015",
-    date: "Jan 5, 2026",
-    reason: "Family function - Going to hometown",
-    status: "approved" as const,
-    approvedBy: "Warden - Dr. R.K. Patel",
-  },
-  {
-    id: "GP-PU-2025-012",
-    date: "Dec 28, 2025",
-    reason: "Medical checkup at Vadodara hospital",
-    status: "approved" as const,
-    approvedBy: "Warden - Dr. R.K. Patel",
-  },
-  {
-    id: "GP-PU-2026-018",
-    date: "Jan 10, 2026",
-    reason: "Interview at TCS Gandhinagar",
-    status: "pending" as const,
-  },
-];
+interface GatePassRecord {
+  id: string;
+  pass_id: string;
+  reason: string;
+  departure_date: string;
+  status: string;
+  approved_by: string | null;
+  created_at: string;
+}
 
 const GatePass = () => {
   const [showForm, setShowForm] = useState(false);
   const [date, setDate] = useState("");
   const [reason, setReason] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [passes, setPasses] = useState<GatePassRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchPasses = async () => {
+    const { data, error } = await supabase
+      .from("gate_passes")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (!error && data) setPasses(data);
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchPasses(); }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!date || !reason.trim()) return;
 
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    setShowForm(false);
-    setDate("");
-    setReason("");
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { toast.error("Please login"); return; }
 
-    setTimeout(() => setIsSuccess(false), 3000);
+      const passId = `GP-PU-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 999)).padStart(3, '0')}`;
+
+      const { error } = await supabase.from("gate_passes").insert({
+        user_id: user.id,
+        pass_id: passId,
+        reason: reason.trim(),
+        departure_date: date,
+      });
+
+      if (error) throw error;
+      toast.success("Gate pass request submitted!");
+      setShowForm(false);
+      setDate("");
+      setReason("");
+      fetchPasses();
+    } catch (err: any) {
+      toast.error(err.message || "Failed to submit");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getStatusType = (status: string) => {
+    if (status === "approved") return "approved" as const;
+    if (status === "rejected") return "rejected" as const;
+    return "pending" as const;
   };
 
   return (
     <Layout title="Gate Pass" showBack>
-      {/* Success Toast */}
-      {isSuccess && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          className="fixed top-4 left-4 right-4 z-50"
-        >
-          <div className="max-w-lg mx-auto gradient-success text-white p-4 rounded-2xl shadow-lg flex items-center gap-3">
-            <CheckCircle2 className="w-5 h-5" />
-            <span className="font-semibold text-sm">Gate pass request submitted!</span>
-          </div>
-        </motion.div>
-      )}
-
-      {/* New Request Button/Form */}
       <div className="mb-6">
         <Button 
           onClick={() => setShowForm(!showForm)}
@@ -78,107 +85,53 @@ const GatePass = () => {
           size="lg"
           variant={showForm ? "outline" : "default"}
         >
-          {showForm ? (
-            <>
-              <ChevronUp className="w-5 h-5" />
-              Cancel Request
-            </>
-          ) : (
-            <>
-              <Plus className="w-5 h-5" />
-              Request Gate Pass
-            </>
-          )}
+          {showForm ? (<><ChevronUp className="w-5 h-5" />Cancel Request</>) : (<><Plus className="w-5 h-5" />Request Gate Pass</>)}
         </Button>
 
         {showForm && (
-          <motion.form 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            onSubmit={handleSubmit} 
-            className="mt-4 p-5 bg-card rounded-2xl shadow-card border border-border/50 space-y-4"
-          >
+          <motion.form initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} onSubmit={handleSubmit} className="mt-4 p-5 bg-card rounded-2xl shadow-card border border-border/50 space-y-4">
             <div>
-              <Label htmlFor="date" className="text-foreground font-semibold text-sm mb-2 block">
-                Select Date *
-              </Label>
-              <Input
-                id="date"
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="h-12 bg-secondary/60 border border-border/80 rounded-xl focus:ring-2 focus:ring-primary/30"
-              />
+              <Label htmlFor="date" className="text-foreground font-semibold text-sm mb-2 block">Select Date *</Label>
+              <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} className="h-12 bg-secondary/60 border border-border/80 rounded-xl" />
             </div>
-
             <div>
-              <Label htmlFor="reason" className="text-foreground font-semibold text-sm mb-2 block">
-                Reason for Leave *
-              </Label>
-              <Textarea
-                id="reason"
-                placeholder="Explain why you need to leave the hostel..."
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                className="min-h-[100px] bg-secondary/60 border border-border/80 rounded-xl focus:ring-2 focus:ring-primary/30 resize-none"
-              />
+              <Label htmlFor="reason" className="text-foreground font-semibold text-sm mb-2 block">Reason for Leave *</Label>
+              <Textarea id="reason" placeholder="Explain why you need to leave the hostel..." value={reason} onChange={(e) => setReason(e.target.value)} className="min-h-[100px] bg-secondary/60 border border-border/80 rounded-xl resize-none" />
             </div>
-
-            <Button 
-              type="submit" 
-              className="w-full rounded-xl gradient-primary"
-              disabled={!date || !reason.trim() || isSubmitting}
-            >
-              {isSubmitting ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Submitting...
-                </div>
-              ) : (
-                "Submit Request"
-              )}
+            <Button type="submit" className="w-full rounded-xl gradient-primary" disabled={!date || !reason.trim() || isSubmitting}>
+              {isSubmitting ? (<div className="flex items-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Submitting...</div>) : "Submit Request"}
             </Button>
           </motion.form>
         )}
       </div>
 
-      {/* Existing Passes */}
       <div>
-        <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">
-          Your Gate Passes
-        </h2>
-
-        <div className="space-y-3">
-          {existingPasses.map((pass, index) => (
-            <motion.div 
-              key={pass.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.08 }}
-              className="bg-card p-4 rounded-2xl shadow-card border border-border/50"
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <p className="text-[11px] text-muted-foreground font-medium">{pass.id}</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Calendar className="w-4 h-4 text-primary" />
-                    <span className="font-bold text-foreground text-sm">{pass.date}</span>
+        <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">Your Gate Passes</h2>
+        {loading ? (
+          <div className="flex justify-center py-10"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>
+        ) : (
+          <div className="space-y-3">
+            {passes.map((pass, index) => (
+              <motion.div key={pass.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }} className="bg-card p-4 rounded-2xl shadow-card border border-border/50">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <p className="text-[11px] text-muted-foreground font-medium">{pass.pass_id}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Calendar className="w-4 h-4 text-primary" />
+                      <span className="font-bold text-foreground text-sm">{new Date(pass.departure_date).toLocaleDateString()}</span>
+                    </div>
                   </div>
+                  <StatusBadge status={getStatusType(pass.status)} />
                 </div>
-                <StatusBadge status={pass.status} />
-              </div>
-              <p className="text-sm text-muted-foreground mb-2">{pass.reason}</p>
-              {pass.approvedBy && (
-                <p className="text-xs text-success font-semibold">
-                  ✓ Approved by {pass.approvedBy}
-                </p>
-              )}
-            </motion.div>
-          ))}
-        </div>
+                <p className="text-sm text-muted-foreground mb-2">{pass.reason}</p>
+                {pass.approved_by && <p className="text-xs text-success font-semibold">✓ Approved by {pass.approved_by}</p>}
+              </motion.div>
+            ))}
+            {passes.length === 0 && <p className="text-center text-muted-foreground text-sm py-8">No gate passes yet</p>}
+          </div>
+        )}
       </div>
 
-      {/* Info */}
       <div className="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/15">
         <p className="text-sm text-foreground font-bold mb-1">Gate Pass Guidelines</p>
         <ul className="text-xs text-muted-foreground space-y-1 leading-relaxed">
