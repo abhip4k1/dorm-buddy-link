@@ -1,13 +1,8 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { 
-  Home, 
-  FileText, 
-  Bell,
-  User,
-  ArrowLeft
-} from "lucide-react";
+import { Home, FileText, Bell, User, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,6 +13,9 @@ interface LayoutProps {
 
 const Layout = ({ children, title, showBack = false, showNav = true }: LayoutProps) => {
   const location = useLocation();
+  const { profile } = useAuth();
+
+  const userName = profile?.full_name?.split(" ")[0] || "Student";
   
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Home" },
@@ -33,10 +31,7 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
         <header className="sticky top-0 z-50 bg-card/90 backdrop-blur-lg border-b border-border/50">
           <div className="w-full max-w-7xl mx-auto flex items-center gap-3 px-5 md:px-8 lg:px-12 py-3 md:py-4">
             {showBack && (
-              <Link 
-                to="/dashboard" 
-                className="p-2 -ml-2 rounded-xl hover:bg-secondary/80 transition-all duration-200 active:scale-95"
-              >
+              <Link to="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-secondary/80 transition-all duration-200 active:scale-95">
                 <ArrowLeft className="w-5 h-5 text-foreground" />
               </Link>
             )}
@@ -71,26 +66,12 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
               {navItems.map((item) => {
                 const isActive = location.pathname.startsWith(item.path);
                 return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className="relative flex flex-col items-center gap-0.5 px-5 py-2 rounded-xl transition-all duration-200"
-                  >
+                  <Link key={item.path} to={item.path} className="relative flex flex-col items-center gap-0.5 px-5 py-2 rounded-xl transition-all duration-200">
                     {isActive && (
-                      <motion.div
-                        layoutId="nav-pill"
-                        className="absolute inset-0 bg-primary/8 rounded-xl"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-                      />
+                      <motion.div layoutId="nav-pill" className="absolute inset-0 bg-primary/8 rounded-xl" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
                     )}
-                    <item.icon 
-                      className={`w-5 h-5 relative z-10 transition-colors duration-200 ${
-                        isActive ? "text-primary" : "text-muted-foreground"
-                      }`} 
-                    />
-                    <span className={`text-[10px] font-semibold relative z-10 transition-colors duration-200 ${
-                      isActive ? "text-primary" : "text-muted-foreground"
-                    }`}>
+                    <item.icon className={`w-5 h-5 relative z-10 transition-colors duration-200 ${isActive ? "text-primary" : "text-muted-foreground"}`} />
+                    <span className={`text-[10px] font-semibold relative z-10 transition-colors duration-200 ${isActive ? "text-primary" : "text-muted-foreground"}`}>
                       {item.label}
                     </span>
                   </Link>
@@ -102,7 +83,7 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
         </nav>
       )}
 
-      {/* Desktop Sidebar/Top Navigation */}
+      {/* Desktop Top Navigation */}
       {showNav && (
         <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border/50">
           <div className="max-w-7xl mx-auto flex items-center justify-between px-8 lg:px-12 py-3">
@@ -113,18 +94,18 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
               {navItems.map((item) => {
                 const isActive = location.pathname.startsWith(item.path);
                 return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
+                  <Link key={item.path} to={item.path}
                     className={`relative flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 text-sm font-semibold ${
                       isActive ? "text-primary bg-primary/8" : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
-                    }`}
-                  >
+                    }`}>
                     <item.icon className="w-4 h-4" />
                     <span>{item.label}</span>
                   </Link>
                 );
               })}
+              <span className="ml-3 text-sm font-semibold text-muted-foreground">
+                Hi, {userName}
+              </span>
             </div>
           </div>
         </nav>
