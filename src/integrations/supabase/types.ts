@@ -95,6 +95,44 @@ export type Database = {
           },
         ]
       }
+      booking_requests: {
+        Row: {
+          created_at: string
+          id: string
+          listing_id: string
+          message: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          listing_id: string
+          message?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          listing_id?: string
+          message?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_requests_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "room_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       complaints: {
         Row: {
           category: string
@@ -426,6 +464,45 @@ export type Database = {
           id?: string
           phone?: string | null
           room_number?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      room_listings: {
+        Row: {
+          amenities: string[] | null
+          created_at: string
+          description: string
+          id: string
+          is_available: boolean
+          location: string | null
+          owner_id: string
+          price: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          amenities?: string[] | null
+          created_at?: string
+          description: string
+          id?: string
+          is_available?: boolean
+          location?: string | null
+          owner_id: string
+          price?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          amenities?: string[] | null
+          created_at?: string
+          description?: string
+          id?: string
+          is_available?: boolean
+          location?: string | null
+          owner_id?: string
+          price?: number
+          title?: string
           updated_at?: string
         }
         Relationships: []
