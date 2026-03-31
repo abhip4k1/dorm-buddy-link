@@ -1,40 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { 
-  Building2, Phone, Mail, Calendar, LogOut, ChevronRight, Settings, Bell, Shield, Loader2
-} from "lucide-react";
+import { Building2, Phone, Mail, Calendar, LogOut, ChevronRight, Settings, Bell, Shield } from "lucide-react";
 import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [profile, setProfile] = useState<any>(null);
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(true);
+  const { profile, user, loading, signOut } = useAuth();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { navigate("/login"); return; }
-      setEmail(user.email || "");
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-
-      if (!error && data) setProfile(data);
-      setLoading(false);
-    };
-    fetchProfile();
-  }, [navigate]);
+    if (!loading && !user) navigate("/");
+  }, [loading, user, navigate]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut();
     toast.success("Signed out successfully");
     navigate("/");
   };
@@ -55,6 +38,7 @@ const Profile = () => {
 
   const name = profile?.full_name || "Student";
   const initials = name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
+  const email = user?.email || "";
 
   return (
     <Layout title="Profile" showBack={false}>
@@ -68,17 +52,17 @@ const Profile = () => {
 
       {(profile?.hostel_block || profile?.room_number) && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="bg-blue-50 rounded-2xl p-4 mb-4 border border-blue-100">
+          className="bg-primary/5 rounded-2xl p-4 mb-4 border border-primary/10">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
-              <Building2 className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <Building2 className="w-5 h-5 text-primary" />
             </div>
             <div>
               <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Accommodation</p>
               <p className="text-base font-bold text-foreground">{profile?.hostel_block || "Not assigned"}</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 pt-3 border-t border-blue-200/50">
+          <div className="grid grid-cols-2 gap-3 pt-3 border-t border-primary/10">
             <div>
               <p className="text-[10px] text-muted-foreground font-semibold uppercase">Room</p>
               <p className="text-sm font-bold text-foreground">{profile?.room_number || "N/A"}</p>
@@ -125,7 +109,7 @@ const Profile = () => {
       </motion.div>
 
       <Button variant="destructive" size="lg" className="w-full rounded-xl" onClick={handleLogout}>
-        <LogOut className="w-5 h-5" />Sign Out
+        <LogOut className="w-5 h-5 mr-2" />Sign Out
       </Button>
 
       <p className="text-center text-[10px] text-muted-foreground mt-5 font-medium">HostelSphere v1.0.0</p>
