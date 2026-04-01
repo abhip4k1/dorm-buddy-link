@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { 
   FileWarning, DoorOpen, CreditCard, UtensilsCrossed, Search, AlertTriangle,
   Bell, MessageSquare, HelpCircle, ChevronRight, Droplets, Clock, Stethoscope,
-  Zap, Calendar, Home as HomeIcon, BookOpen,
+  Zap, Calendar,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
