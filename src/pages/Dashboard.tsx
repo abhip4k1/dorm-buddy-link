@@ -33,8 +33,7 @@ const Dashboard = () => {
       setAnnouncements(ann && ann.length > 0 ? ann : staticUpdates);
       const { count: cCount } = await supabase.from("complaints").select("*", { count: "exact", head: true });
       const { count: gCount } = await supabase.from("gate_passes").select("*", { count: "exact", head: true });
-      const { count: lCount } = await supabase.from("room_listings").select("*", { count: "exact", head: true });
-      setStats({ complaints: cCount || 0, gatePasses: gCount || 0, listings: lCount || 0 });
+      setStats({ complaints: cCount || 0, gatePasses: gCount || 0 });
     };
     fetchDashData();
   }, []);
