@@ -14,7 +14,7 @@ const faqs = [
   {
     category: "General",
     questions: [
-      { q: "What are the hostel entry timings at PU?", a: "Hostel entry time is 9:00 PM on weekdays and 10:30 PM on weekends. Gate closes at 11:00 PM. Late entry requires prior approval from the warden via HostelSphere app." },
+      { q: "What are the hostel entry timings at Parul University?", a: "Hostel entry time is 9:00 PM on weekdays and 10:30 PM on weekends. Gate closes at 11:00 PM. Late entry requires prior approval from the Azad Bhawan warden via HostelSphere app." },
       { q: "How do I apply for a room/bed change?", a: "Submit a room change request through HostelSphere → File Complaint → Other. Include your current and preferred room details. The warden reviews requests within 7 working days." },
       { q: "What items are prohibited in PU hostels?", a: "Prohibited: heaters, irons, hot plates, alcohol, tobacco, pets, weapons, and loud speakers." },
     ],
