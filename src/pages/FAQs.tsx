@@ -40,7 +40,7 @@ const faqs = [
       { q: "What are the laundry timings?", a: "Laundry room: 7 AM - 8 PM daily. Washing machines on first-come basis. ₹20 per wash." },
       { q: "How do I report maintenance issues?", a: "Use HostelSphere → File Complaint → Room & Maintenance. Upload photo proof for faster resolution." },
       { q: "What are the water supply timings?", a: "Hot water: 6-8 AM (winter only). Cold water: 24/7. Water tank refill: 6 AM & 5 PM." },
-      { q: "Is WiFi available in rooms?", a: "Yes, 100 Mbps WiFi in all rooms. Login: enrollment ID. Password: DOB (DDMMYYYY)." },
+      { q: "Is WiFi available in PU hostel rooms?", a: "Yes, 100 Mbps WiFi (SSID: PU-Student) in all rooms. Login: your enrollment ID (e.g. 2303031240145). Password: DOB (DDMMYYYY). Contact IT Helpdesk at Admin Block for issues." },
     ],
   },
   {
