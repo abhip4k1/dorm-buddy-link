@@ -126,7 +126,7 @@ const FAQs = () => {
 
       <div className="mt-8 p-4 bg-primary/5 rounded-2xl border border-primary/15 text-center">
         <p className="text-sm text-foreground font-bold mb-1">Still have questions?</p>
-        <p className="text-xs text-muted-foreground mb-3 font-medium">Contact Azad Bhavan hostel office</p>
+        <p className="text-xs text-muted-foreground mb-3 font-medium">Contact Azad Bhawan hostel office, Parul University, Vadodara</p>
         <a href="mailto:hostel@paruluniversity.ac.in" className="text-sm text-primary font-semibold hover:underline">
           hostel@paruluniversity.ac.in
         </a>

@@ -22,9 +22,9 @@ const Dashboard = () => {
   const room = profile?.room_number || "";
 
   const staticUpdates = [
-    { id: "s1", title: "Water supply will be interrupted on Block C (10 AM - 2 PM)", category: "maintenance", is_important: true, created_at: new Date().toISOString() },
-    { id: "s2", title: "Annual Sports Day registrations are now open!", category: "event", is_important: false, created_at: new Date(Date.now() - 86400000).toISOString() },
-    { id: "s3", title: "Mess menu updated for the week – check new items", category: "general", is_important: false, created_at: new Date(Date.now() - 172800000).toISOString() },
+    { id: "s1", title: "Water supply interrupted in Azad Bhawan – Floor 3 & 4 (10 AM - 2 PM)", category: "maintenance", is_important: true, created_at: new Date().toISOString() },
+    { id: "s2", title: "PU Parivartan 2026 – Cultural fest registrations open at Limda Ground!", category: "event", is_important: false, created_at: new Date(Date.now() - 86400000).toISOString() },
+    { id: "s3", title: "Azad Bhawan mess menu updated – Gujarati thali added on Thursdays", category: "general", is_important: false, created_at: new Date(Date.now() - 172800000).toISOString() },
   ];
 
   useEffect(() => {

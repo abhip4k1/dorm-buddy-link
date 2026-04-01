@@ -116,8 +116,8 @@ const FeeStatus = () => {
       )}
 
       <div className="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/15">
-        <p className="text-sm text-foreground font-bold mb-1">Payment Information</p>
-        <p className="text-xs text-muted-foreground font-medium leading-relaxed">For payment queries, contact hostel accounts office (9 AM - 5 PM).</p>
+        <p className="text-sm text-foreground font-bold mb-1">Parul University – Accounts Office</p>
+        <p className="text-xs text-muted-foreground font-medium leading-relaxed">For payment queries, visit Accounts Office, Admin Block, PU Vadodara (9 AM - 5 PM) or email accounts@paruluniversity.ac.in</p>
       </div>
     </Layout>
   );

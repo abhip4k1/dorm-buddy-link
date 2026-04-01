@@ -113,7 +113,7 @@ const Login = () => {
                 <Input
                   id="enrollmentId"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="yourname@paruluniversity.ac.in"
                   value={enrollmentId}
                   onChange={(e) => setEnrollmentId(e.target.value)}
                   className="h-12 md:h-14 bg-background border border-border rounded-xl text-sm md:text-base px-4"

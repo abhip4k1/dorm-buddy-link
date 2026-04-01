@@ -98,9 +98,9 @@ const Emergency = () => {
         <div className="w-full max-w-sm mt-10 space-y-3">
           <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest text-center mb-2">Emergency Contacts</p>
           {[
-            { icon: Phone, color: "bg-primary/8", iconColor: "text-primary", name: "Warden - Dr. R.K. Patel", phone: "+91 265 2395501", href: "tel:+912652395501" },
-            { icon: ShieldAlert, color: "bg-destructive/8", iconColor: "text-destructive", name: "PU Security (24/7)", phone: "+91 265 2395500", href: "tel:+912652395500" },
-            { icon: Phone, color: "bg-warning/8", iconColor: "text-warning", name: "Hostel Admin Office", phone: "+91 265 2395555", href: "tel:+912652395555" },
+            { icon: Phone, color: "bg-primary/8", iconColor: "text-primary", name: "Warden – Dr. R.K. Patel", phone: "+91 265 2395501", href: "tel:+912652395501" },
+            { icon: ShieldAlert, color: "bg-destructive/8", iconColor: "text-destructive", name: "PU Campus Security (24/7)", phone: "+91 265 2395500", href: "tel:+912652395500" },
+            { icon: Phone, color: "bg-warning/8", iconColor: "text-warning", name: "PU Hostel Admin Office", phone: "+91 265 2395555", href: "tel:+912652395555" },
           ].map((contact, idx) => (
             <a key={idx} href={contact.href} className="flex items-center gap-3 bg-card p-4 rounded-2xl shadow-card border border-border/50 hover:bg-secondary/50 transition-colors">
               <div className={`w-10 h-10 rounded-xl ${contact.color} flex items-center justify-center`}>

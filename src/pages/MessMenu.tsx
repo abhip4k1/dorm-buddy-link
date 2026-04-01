@@ -112,8 +112,8 @@ const MessMenu = () => {
       )}
 
       <div className="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/15">
-        <p className="text-sm font-bold text-foreground mb-1">Azad Bhavan Mess</p>
-        <p className="text-xs text-muted-foreground leading-relaxed">Menu subject to availability. For dietary requirements, contact Mess In-charge.</p>
+        <p className="text-sm font-bold text-foreground mb-1">Azad Bhawan Mess – Parul University</p>
+        <p className="text-xs text-muted-foreground leading-relaxed">Menu subject to availability. For dietary requirements or complaints, contact Mess In-charge at Azad Bhawan ground floor or email hostel@paruluniversity.ac.in</p>
       </div>
     </Layout>
   );
