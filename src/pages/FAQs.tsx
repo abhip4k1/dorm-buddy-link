@@ -30,7 +30,7 @@ const faqs = [
   {
     category: "Fees & Payments",
     questions: [
-      { q: "What are the hostel fee deadlines?", a: "Hostel fees due within 15 days of each semester start. Late fee: ₹100/day." },
+      { q: "What are the PU hostel fee deadlines?", a: "Hostel fees due within 15 days of each semester start. Pay at PU Accounts Office, Admin Block. Late fee: ₹100/day." },
       { q: "Is the security deposit refundable?", a: "Yes, ₹5000 security deposit is fully refundable upon checkout, subject to no dues and room inspection." },
     ],
   },
