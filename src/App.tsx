@@ -20,9 +20,6 @@ import Feedback from "./pages/Feedback";
 import FAQs from "./pages/FAQs";
 import Profile from "./pages/Profile";
 import HealthAppointment from "./pages/HealthAppointment";
-import Listings from "./pages/Listings";
-import AddListing from "./pages/AddListing";
-import MyBookings from "./pages/MyBookings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
