@@ -20,9 +20,6 @@ import Feedback from "./pages/Feedback";
 import FAQs from "./pages/FAQs";
 import Profile from "./pages/Profile";
 import HealthAppointment from "./pages/HealthAppointment";
-import Listings from "./pages/Listings";
-import AddListing from "./pages/AddListing";
-import MyBookings from "./pages/MyBookings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,9 +47,6 @@ const App = () => (
             <Route path="/faqs" element={<ProtectedRoute><FAQs /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/health" element={<ProtectedRoute><HealthAppointment /></ProtectedRoute>} />
-            <Route path="/listings" element={<ProtectedRoute><Listings /></ProtectedRoute>} />
-            <Route path="/listings/add" element={<ProtectedRoute><AddListing /></ProtectedRoute>} />
-            <Route path="/bookings" element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { 
   FileWarning, DoorOpen, CreditCard, UtensilsCrossed, Search, AlertTriangle,
   Bell, MessageSquare, HelpCircle, ChevronRight, Droplets, Clock, Stethoscope,
-  Zap, Calendar, Home as HomeIcon, BookOpen,
+  Zap, Calendar,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -14,7 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 const Dashboard = () => {
   const { profile, loading: authLoading } = useAuth();
   const [announcements, setAnnouncements] = useState<any[]>([]);
-  const [stats, setStats] = useState({ complaints: 0, gatePasses: 0, listings: 0 });
+  const [stats, setStats] = useState({ complaints: 0, gatePasses: 0 });
 
   const name = profile?.full_name || "Student";
   const initials = name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
@@ -33,8 +33,7 @@ const Dashboard = () => {
       setAnnouncements(ann && ann.length > 0 ? ann : staticUpdates);
       const { count: cCount } = await supabase.from("complaints").select("*", { count: "exact", head: true });
       const { count: gCount } = await supabase.from("gate_passes").select("*", { count: "exact", head: true });
-      const { count: lCount } = await supabase.from("room_listings").select("*", { count: "exact", head: true });
-      setStats({ complaints: cCount || 0, gatePasses: gCount || 0, listings: lCount || 0 });
+      setStats({ complaints: cCount || 0, gatePasses: gCount || 0 });
     };
     fetchDashData();
   }, []);
@@ -120,7 +119,7 @@ const Dashboard = () => {
           <section>
             <div className="flex items-center justify-between mb-3 md:mb-4">
               <h2 className="text-sm md:text-base lg:text-lg font-bold text-foreground">Quick Actions</h2>
-              <span className="text-[10px] md:text-xs font-semibold text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">{quickActions.length + 2} services</span>
+              <span className="text-[10px] md:text-xs font-semibold text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">{quickActions.length} services</span>
             </div>
             <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
               {quickActions.map((action, idx) => (
@@ -133,23 +132,6 @@ const Dashboard = () => {
                   </Link>
                 </motion.div>
               ))}
-              {/* Listings & Bookings quick actions */}
-              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                <Link to="/listings" className="block p-4 md:p-5 rounded-2xl bg-card border border-border/60 shadow-card hover:shadow-card-hover active:scale-[0.96] transition-all duration-200 text-center group">
-                  <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.4 }} className="w-12 h-12 md:w-14 md:h-14 rounded-2xl gradient-teal flex items-center justify-center mx-auto mb-2.5 shadow-sm group-hover:shadow-md transition-shadow">
-                    <HomeIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                  </motion.div>
-                  <p className="text-xs md:text-sm font-bold text-foreground leading-tight">Rooms</p>
-                </Link>
-              </motion.div>
-              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
-                <Link to="/bookings" className="block p-4 md:p-5 rounded-2xl bg-card border border-border/60 shadow-card hover:shadow-card-hover active:scale-[0.96] transition-all duration-200 text-center group">
-                  <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.4 }} className="w-12 h-12 md:w-14 md:h-14 rounded-2xl gradient-purple flex items-center justify-center mx-auto mb-2.5 shadow-sm group-hover:shadow-md transition-shadow">
-                    <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                  </motion.div>
-                  <p className="text-xs md:text-sm font-bold text-foreground leading-tight">Bookings</p>
-                </Link>
-              </motion.div>
             </div>
           </section>
 
@@ -182,7 +164,6 @@ const Dashboard = () => {
               {[
                 { label: "Complaints", value: stats.complaints, emoji: "📝", gradient: "gradient-accent" },
                 { label: "Gate Passes", value: stats.gatePasses, emoji: "🚪", gradient: "gradient-primary" },
-                { label: "Listings", value: stats.listings, emoji: "🏠", gradient: "gradient-teal" },
               ].map((stat, index) => (
                 <motion.div key={index} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + index * 0.06 }}
                   className="bg-card rounded-2xl p-4 md:p-5 border border-border/60 shadow-card relative overflow-hidden">
