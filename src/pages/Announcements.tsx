@@ -24,16 +24,24 @@ const Announcements = () => {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const staticAnnouncements: Announcement[] = [
+    { id: "sa1", title: "Water Supply Interruption – Block C", content: "Due to maintenance work, water supply in Block C will be interrupted from 10 AM to 2 PM on Wednesday. Please store water in advance.", category: "maintenance", is_important: true, created_at: new Date().toISOString() },
+    { id: "sa2", title: "Annual Sports Day 2026 – Register Now!", content: "Registrations for the Annual Sports Day are now open. Events include cricket, football, badminton, athletics, and chess. Register at the sports office before April 10.", category: "event", is_important: false, created_at: new Date(Date.now() - 86400000).toISOString() },
+    { id: "sa3", title: "Mess Menu Updated for This Week", content: "The weekly mess menu has been refreshed with new items including paneer butter masala, pasta, and fresh fruit salads. Check the Mess Menu section for details.", category: "mess", is_important: false, created_at: new Date(Date.now() - 172800000).toISOString() },
+    { id: "sa4", title: "Wi-Fi Maintenance Scheduled", content: "Campus Wi-Fi will undergo maintenance on Saturday from 12 AM to 6 AM. Please plan downloads accordingly.", category: "maintenance", is_important: true, created_at: new Date(Date.now() - 259200000).toISOString() },
+    { id: "sa5", title: "Hostel Fee Deadline Reminder", content: "Last date to pay hostel fees for Semester 6 is April 30, 2026. Late payments will incur a fine of ₹500.", category: "general", is_important: false, created_at: new Date(Date.now() - 345600000).toISOString() },
+  ];
+
   useEffect(() => {
-    const fetch = async () => {
+    const fetchAnn = async () => {
       const { data, error } = await supabase
         .from("announcements")
         .select("*")
         .order("created_at", { ascending: false });
-      if (!error && data) setAnnouncements(data);
+      setAnnouncements(!error && data && data.length > 0 ? data : staticAnnouncements);
       setLoading(false);
     };
-    fetch();
+    fetchAnn();
   }, []);
 
   if (loading) {
