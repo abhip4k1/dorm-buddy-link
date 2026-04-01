@@ -22,7 +22,7 @@ const faqs = [
   {
     category: "Mess & Dining",
     questions: [
-      { q: "Can I skip meals and get a refund?", a: "Mess fees are fixed per semester. For leaves exceeding 15 days, apply for rebate at hostel office before departure with gate pass proof." },
+      { q: "Can I skip meals and get a refund?", a: "Mess fees are fixed per semester at Parul University. For leaves exceeding 15 days, apply for rebate at the Azad Bhawan hostel office before departure with gate pass proof." },
       { q: "What if I have dietary restrictions?", a: "Inform the Azad Bhavan mess in-charge. Both veg and non-veg options available. For medical dietary needs, submit a doctor's certificate." },
       { q: "Can guests eat at the mess?", a: "Yes, guest meal coupons available at hostel office: Breakfast ₹50, Lunch ₹80, Dinner ₹80." },
     ],
