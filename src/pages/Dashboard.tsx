@@ -132,23 +132,6 @@ const Dashboard = () => {
                   </Link>
                 </motion.div>
               ))}
-              {/* Listings & Bookings quick actions */}
-              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                <Link to="/listings" className="block p-4 md:p-5 rounded-2xl bg-card border border-border/60 shadow-card hover:shadow-card-hover active:scale-[0.96] transition-all duration-200 text-center group">
-                  <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.4 }} className="w-12 h-12 md:w-14 md:h-14 rounded-2xl gradient-teal flex items-center justify-center mx-auto mb-2.5 shadow-sm group-hover:shadow-md transition-shadow">
-                    <HomeIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                  </motion.div>
-                  <p className="text-xs md:text-sm font-bold text-foreground leading-tight">Rooms</p>
-                </Link>
-              </motion.div>
-              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
-                <Link to="/bookings" className="block p-4 md:p-5 rounded-2xl bg-card border border-border/60 shadow-card hover:shadow-card-hover active:scale-[0.96] transition-all duration-200 text-center group">
-                  <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.4 }} className="w-12 h-12 md:w-14 md:h-14 rounded-2xl gradient-purple flex items-center justify-center mx-auto mb-2.5 shadow-sm group-hover:shadow-md transition-shadow">
-                    <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                  </motion.div>
-                  <p className="text-xs md:text-sm font-bold text-foreground leading-tight">Bookings</p>
-                </Link>
-              </motion.div>
             </div>
           </section>
 
