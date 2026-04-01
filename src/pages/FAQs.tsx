@@ -14,15 +14,15 @@ const faqs = [
   {
     category: "General",
     questions: [
-      { q: "What are the hostel entry timings at PU?", a: "Hostel entry time is 9:00 PM on weekdays and 10:30 PM on weekends. Gate closes at 11:00 PM. Late entry requires prior approval from the warden via HostelSphere app." },
+      { q: "What are the hostel entry timings at Parul University?", a: "Hostel entry time is 9:00 PM on weekdays and 10:30 PM on weekends. Gate closes at 11:00 PM. Late entry requires prior approval from the Azad Bhawan warden via HostelSphere app." },
       { q: "How do I apply for a room/bed change?", a: "Submit a room change request through HostelSphere → File Complaint → Other. Include your current and preferred room details. The warden reviews requests within 7 working days." },
-      { q: "What items are prohibited in PU hostels?", a: "Prohibited: heaters, irons, hot plates, alcohol, tobacco, pets, weapons, and loud speakers." },
+      { q: "What items are prohibited in Parul University hostels?", a: "Prohibited: heaters, irons, hot plates, alcohol, tobacco, pets, weapons, and loud speakers. Violations reported to the PU Discipline Committee." },
     ],
   },
   {
     category: "Mess & Dining",
     questions: [
-      { q: "Can I skip meals and get a refund?", a: "Mess fees are fixed per semester. For leaves exceeding 15 days, apply for rebate at hostel office before departure with gate pass proof." },
+      { q: "Can I skip meals and get a refund?", a: "Mess fees are fixed per semester at Parul University. For leaves exceeding 15 days, apply for rebate at the Azad Bhawan hostel office before departure with gate pass proof." },
       { q: "What if I have dietary restrictions?", a: "Inform the Azad Bhavan mess in-charge. Both veg and non-veg options available. For medical dietary needs, submit a doctor's certificate." },
       { q: "Can guests eat at the mess?", a: "Yes, guest meal coupons available at hostel office: Breakfast ₹50, Lunch ₹80, Dinner ₹80." },
     ],
@@ -30,7 +30,7 @@ const faqs = [
   {
     category: "Fees & Payments",
     questions: [
-      { q: "What are the hostel fee deadlines?", a: "Hostel fees due within 15 days of each semester start. Late fee: ₹100/day." },
+      { q: "What are the PU hostel fee deadlines?", a: "Hostel fees due within 15 days of each semester start. Pay at PU Accounts Office, Admin Block. Late fee: ₹100/day." },
       { q: "Is the security deposit refundable?", a: "Yes, ₹5000 security deposit is fully refundable upon checkout, subject to no dues and room inspection." },
     ],
   },
@@ -40,7 +40,7 @@ const faqs = [
       { q: "What are the laundry timings?", a: "Laundry room: 7 AM - 8 PM daily. Washing machines on first-come basis. ₹20 per wash." },
       { q: "How do I report maintenance issues?", a: "Use HostelSphere → File Complaint → Room & Maintenance. Upload photo proof for faster resolution." },
       { q: "What are the water supply timings?", a: "Hot water: 6-8 AM (winter only). Cold water: 24/7. Water tank refill: 6 AM & 5 PM." },
-      { q: "Is WiFi available in rooms?", a: "Yes, 100 Mbps WiFi in all rooms. Login: enrollment ID. Password: DOB (DDMMYYYY)." },
+      { q: "Is WiFi available in PU hostel rooms?", a: "Yes, 100 Mbps WiFi (SSID: PU-Student) in all rooms. Login: your enrollment ID (e.g. 2303031240145). Password: DOB (DDMMYYYY). Contact IT Helpdesk at Admin Block for issues." },
     ],
   },
   {
@@ -126,7 +126,7 @@ const FAQs = () => {
 
       <div className="mt-8 p-4 bg-primary/5 rounded-2xl border border-primary/15 text-center">
         <p className="text-sm text-foreground font-bold mb-1">Still have questions?</p>
-        <p className="text-xs text-muted-foreground mb-3 font-medium">Contact Azad Bhavan hostel office</p>
+        <p className="text-xs text-muted-foreground mb-3 font-medium">Contact Azad Bhawan hostel office, Parul University, Vadodara</p>
         <a href="mailto:hostel@paruluniversity.ac.in" className="text-sm text-primary font-semibold hover:underline">
           hostel@paruluniversity.ac.in
         </a>

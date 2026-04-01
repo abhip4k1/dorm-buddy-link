@@ -114,7 +114,7 @@ const Signup = () => {
                 <Input
                   id="fullName"
                   type="text"
-                  placeholder="e.g. Rahul Sharma"
+                  placeholder="e.g. Abhishek Patel"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   className="h-12 md:h-14 bg-background border border-border rounded-xl text-sm md:text-base px-4"
@@ -142,7 +142,7 @@ const Signup = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="e.g. yourname@paruluniversity.ac.in"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="h-12 md:h-14 bg-background border border-border rounded-xl text-sm md:text-base px-4"

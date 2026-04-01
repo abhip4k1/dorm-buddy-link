@@ -20,9 +20,9 @@ const FeeStatus = () => {
   const [loading, setLoading] = useState(true);
 
   const staticFees: FeeRecord[] = [
-    { id: "sf1", semester: "Semester 6 – Spring 2026", amount: 87500, due_date: "2026-04-30", paid_date: null, status: "pending", transaction_id: null, breakdown: [{ item: "Tuition Fee", amount: 52000 }, { item: "Hostel Fee", amount: 24000 }, { item: "Mess Charges", amount: 8500 }, { item: "Library & Lab", amount: 3000 }] },
-    { id: "sf2", semester: "Semester 5 – Fall 2025", amount: 85000, due_date: "2025-10-15", paid_date: "2025-10-12", status: "paid", transaction_id: "TXN-2025-98234", breakdown: [{ item: "Tuition Fee", amount: 50000 }, { item: "Hostel Fee", amount: 24000 }, { item: "Mess Charges", amount: 8000 }, { item: "Library & Lab", amount: 3000 }] },
-    { id: "sf3", semester: "Semester 4 – Spring 2025", amount: 82000, due_date: "2025-04-15", paid_date: "2025-04-10", status: "paid", transaction_id: "TXN-2025-45612", breakdown: [{ item: "Tuition Fee", amount: 48000 }, { item: "Hostel Fee", amount: 23000 }, { item: "Mess Charges", amount: 8000 }, { item: "Library & Lab", amount: 3000 }] },
+    { id: "sf1", semester: "Sem 6 – B.Tech CSE (Spring 2026)", amount: 87500, due_date: "2026-04-30", paid_date: null, status: "pending", transaction_id: null, breakdown: [{ item: "PU Tuition Fee", amount: 52000 }, { item: "Azad Bhawan Hostel", amount: 24000 }, { item: "Mess Charges", amount: 8500 }, { item: "Library & Lab Fee", amount: 3000 }] },
+    { id: "sf2", semester: "Sem 5 – B.Tech CSE (Fall 2025)", amount: 85000, due_date: "2025-10-15", paid_date: "2025-10-12", status: "paid", transaction_id: "PU-TXN-2025-98234", breakdown: [{ item: "PU Tuition Fee", amount: 50000 }, { item: "Azad Bhawan Hostel", amount: 24000 }, { item: "Mess Charges", amount: 8000 }, { item: "Library & Lab Fee", amount: 3000 }] },
+    { id: "sf3", semester: "Sem 4 – B.Tech CSE (Spring 2025)", amount: 82000, due_date: "2025-04-15", paid_date: "2025-04-10", status: "paid", transaction_id: "PU-TXN-2025-45612", breakdown: [{ item: "PU Tuition Fee", amount: 48000 }, { item: "Azad Bhawan Hostel", amount: 23000 }, { item: "Mess Charges", amount: 8000 }, { item: "Library & Lab Fee", amount: 3000 }] },
   ];
 
   useEffect(() => {
@@ -116,8 +116,8 @@ const FeeStatus = () => {
       )}
 
       <div className="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/15">
-        <p className="text-sm text-foreground font-bold mb-1">Payment Information</p>
-        <p className="text-xs text-muted-foreground font-medium leading-relaxed">For payment queries, contact hostel accounts office (9 AM - 5 PM).</p>
+        <p className="text-sm text-foreground font-bold mb-1">Parul University – Accounts Office</p>
+        <p className="text-xs text-muted-foreground font-medium leading-relaxed">For payment queries, visit Accounts Office, Admin Block, PU Vadodara (9 AM - 5 PM) or email accounts@paruluniversity.ac.in</p>
       </div>
     </Layout>
   );
