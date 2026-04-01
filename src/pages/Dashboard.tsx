@@ -21,11 +21,16 @@ const Dashboard = () => {
   const hostel = profile?.hostel_block || "Not assigned";
   const room = profile?.room_number || "";
 
+  const staticUpdates = [
+    { id: "s1", title: "Water supply will be interrupted on Block C (10 AM - 2 PM)", category: "maintenance", is_important: true, created_at: new Date().toISOString() },
+    { id: "s2", title: "Annual Sports Day registrations are now open!", category: "event", is_important: false, created_at: new Date(Date.now() - 86400000).toISOString() },
+    { id: "s3", title: "Mess menu updated for the week – check new items", category: "general", is_important: false, created_at: new Date(Date.now() - 172800000).toISOString() },
+  ];
+
   useEffect(() => {
     const fetchDashData = async () => {
       const { data: ann } = await supabase.from("announcements").select("*").order("created_at", { ascending: false }).limit(3);
-      setAnnouncements(ann || []);
-
+      setAnnouncements(ann && ann.length > 0 ? ann : staticUpdates);
       const { count: cCount } = await supabase.from("complaints").select("*", { count: "exact", head: true });
       const { count: gCount } = await supabase.from("gate_passes").select("*", { count: "exact", head: true });
       const { count: lCount } = await supabase.from("room_listings").select("*", { count: "exact", head: true });

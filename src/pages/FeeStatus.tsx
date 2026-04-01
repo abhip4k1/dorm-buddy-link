@@ -19,16 +19,22 @@ const FeeStatus = () => {
   const [feeRecords, setFeeRecords] = useState<FeeRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const staticFees: FeeRecord[] = [
+    { id: "sf1", semester: "Semester 6 – Spring 2026", amount: 87500, due_date: "2026-04-30", paid_date: null, status: "pending", transaction_id: null, breakdown: [{ item: "Tuition Fee", amount: 52000 }, { item: "Hostel Fee", amount: 24000 }, { item: "Mess Charges", amount: 8500 }, { item: "Library & Lab", amount: 3000 }] },
+    { id: "sf2", semester: "Semester 5 – Fall 2025", amount: 85000, due_date: "2025-10-15", paid_date: "2025-10-12", status: "paid", transaction_id: "TXN-2025-98234", breakdown: [{ item: "Tuition Fee", amount: 50000 }, { item: "Hostel Fee", amount: 24000 }, { item: "Mess Charges", amount: 8000 }, { item: "Library & Lab", amount: 3000 }] },
+    { id: "sf3", semester: "Semester 4 – Spring 2025", amount: 82000, due_date: "2025-04-15", paid_date: "2025-04-10", status: "paid", transaction_id: "TXN-2025-45612", breakdown: [{ item: "Tuition Fee", amount: 48000 }, { item: "Hostel Fee", amount: 23000 }, { item: "Mess Charges", amount: 8000 }, { item: "Library & Lab", amount: 3000 }] },
+  ];
+
   useEffect(() => {
-    const fetch = async () => {
+    const fetchFees = async () => {
       const { data, error } = await supabase
         .from("fee_records")
         .select("*")
         .order("created_at", { ascending: false });
-      if (!error && data) setFeeRecords(data);
+      setFeeRecords(!error && data && data.length > 0 ? data : staticFees);
       setLoading(false);
     };
-    fetch();
+    fetchFees();
   }, []);
 
   const pendingFees = feeRecords.filter(f => f.status === "pending");
