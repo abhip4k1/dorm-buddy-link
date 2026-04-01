@@ -164,7 +164,6 @@ const Dashboard = () => {
               {[
                 { label: "Complaints", value: stats.complaints, emoji: "📝", gradient: "gradient-accent" },
                 { label: "Gate Passes", value: stats.gatePasses, emoji: "🚪", gradient: "gradient-primary" },
-                { label: "Listings", value: stats.listings, emoji: "🏠", gradient: "gradient-teal" },
               ].map((stat, index) => (
                 <motion.div key={index} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + index * 0.06 }}
                   className="bg-card rounded-2xl p-4 md:p-5 border border-border/60 shadow-card relative overflow-hidden">
