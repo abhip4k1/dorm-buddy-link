@@ -14,7 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 const Dashboard = () => {
   const { profile, loading: authLoading } = useAuth();
   const [announcements, setAnnouncements] = useState<any[]>([]);
-  const [stats, setStats] = useState({ complaints: 0, gatePasses: 0, listings: 0 });
+  const [stats, setStats] = useState({ complaints: 0, gatePasses: 0 });
 
   const name = profile?.full_name || "Student";
   const initials = name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
