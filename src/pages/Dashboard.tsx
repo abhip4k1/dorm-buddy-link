@@ -119,7 +119,7 @@ const Dashboard = () => {
           <section>
             <div className="flex items-center justify-between mb-3 md:mb-4">
               <h2 className="text-sm md:text-base lg:text-lg font-bold text-foreground">Quick Actions</h2>
-              <span className="text-[10px] md:text-xs font-semibold text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">{quickActions.length + 2} services</span>
+              <span className="text-[10px] md:text-xs font-semibold text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">{quickActions.length} services</span>
             </div>
             <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
               {quickActions.map((action, idx) => (
