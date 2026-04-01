@@ -182,7 +182,7 @@ const Login = () => {
             </div>
             <div className="flex-1 bg-card rounded-xl p-3 md:p-4 border border-border/60">
               <p className="text-[10px] md:text-xs text-muted-foreground font-semibold uppercase tracking-wider">Email</p>
-              <p className="text-xs md:text-sm font-bold text-foreground mt-0.5 truncate">hostel@pu.ac.in</p>
+              <p className="text-xs md:text-sm font-bold text-foreground mt-0.5 truncate">hostel@paruluniversity.ac.in</p>
             </div>
           </div>
 
