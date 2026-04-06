@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, FileText, Bell, User, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import NotificationBell from "@/components/NotificationBell";
 
 interface LayoutProps {
   children: ReactNode;
