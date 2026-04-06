@@ -22,6 +22,7 @@ import Feedback from "./pages/Feedback";
 import FAQs from "./pages/FAQs";
 import Profile from "./pages/Profile";
 import HealthAppointment from "./pages/HealthAppointment";
+import Notifications from "./pages/Notifications";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
