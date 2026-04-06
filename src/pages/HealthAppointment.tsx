@@ -55,7 +55,8 @@ const HealthAppointment = () => {
   };
 
   const fetchMyAppointments = async () => {
-    const { data, error } = await supabase.from("appointments").select(`*, doctors (*), doctor_slots (*)`).eq("student_enrollment", "guest").order("created_at", { ascending: false });
+    const enrollment = profile?.enrollment_id || user?.email || "";
+    const { data, error } = await supabase.from("appointments").select(`*, doctors (*), doctor_slots (*)`).eq("student_enrollment", enrollment).order("created_at", { ascending: false });
     if (!error) setMyAppointments(data || []);
   };
 
