@@ -30,6 +30,7 @@ interface Appointment {
 
 const HealthAppointment = () => {
   const { toast } = useToast();
+  const { user, profile } = useAuth();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [slots, setSlots] = useState<Slot[]>([]);
