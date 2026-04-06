@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
 } from "@/components/ui/dialog";
@@ -29,6 +30,7 @@ interface Appointment {
 
 const HealthAppointment = () => {
   const { toast } = useToast();
+  const { user, profile } = useAuth();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [slots, setSlots] = useState<Slot[]>([]);
@@ -53,7 +55,8 @@ const HealthAppointment = () => {
   };
 
   const fetchMyAppointments = async () => {
-    const { data, error } = await supabase.from("appointments").select(`*, doctors (*), doctor_slots (*)`).eq("student_enrollment", "guest").order("created_at", { ascending: false });
+    const enrollment = profile?.enrollment_id || user?.email || "";
+    const { data, error } = await supabase.from("appointments").select(`*, doctors (*), doctor_slots (*)`).eq("student_enrollment", enrollment).order("created_at", { ascending: false });
     if (!error) setMyAppointments(data || []);
   };
 
@@ -70,7 +73,9 @@ const HealthAppointment = () => {
     if (!selectedDoctor || !selectedSlot) return;
     setIsBooking(true);
     const appointmentId = `PU-HSP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-    const { error: appointmentError } = await supabase.from("appointments").insert({ appointment_id: appointmentId, student_enrollment: "guest", student_name: "Abhi", doctor_id: selectedDoctor.id, slot_id: selectedSlot.id, reason: reason || null, status: "confirmed" });
+    const enrollment = profile?.enrollment_id || user?.email || "";
+    const studentName = profile?.full_name || "Student";
+    const { error: appointmentError } = await supabase.from("appointments").insert({ appointment_id: appointmentId, student_enrollment: enrollment, student_name: studentName, doctor_id: selectedDoctor.id, slot_id: selectedSlot.id, reason: reason || null, status: "confirmed" });
     if (appointmentError) { toast({ title: "Booking failed", description: appointmentError.message, variant: "destructive" }); setIsBooking(false); return; }
     await supabase.from("doctor_slots").update({ is_booked: true }).eq("id", selectedSlot.id);
     setIsBooking(false); setIsBookingDialogOpen(false); setBookedAppointmentId(appointmentId); setIsConfirmationDialogOpen(true);

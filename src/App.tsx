@@ -7,6 +7,8 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import NewComplaint from "./pages/NewComplaint";
 import ComplaintStatus from "./pages/ComplaintStatus";
@@ -34,6 +36,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/complaints/new" element={<ProtectedRoute><NewComplaint /></ProtectedRoute>} />
             <Route path="/complaints/status" element={<ProtectedRoute><ComplaintStatus /></ProtectedRoute>} />

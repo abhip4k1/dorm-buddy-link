@@ -144,9 +144,9 @@ const Login = () => {
               </div>
 
               <div className="flex justify-end">
-                <button type="button" className="text-xs md:text-sm text-primary font-semibold">
+                <Link to="/forgot-password" className="text-xs md:text-sm text-primary font-semibold">
                   Forgot Password?
-                </button>
+                </Link>
               </div>
 
               <Button 
