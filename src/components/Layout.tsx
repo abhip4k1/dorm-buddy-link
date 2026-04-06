@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, FileText, Bell, User, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import NotificationBell from "@/components/NotificationBell";
 
 interface LayoutProps {
   children: ReactNode;
@@ -36,8 +37,9 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
               </Link>
             )}
             {title && (
-              <h1 className="text-base md:text-lg lg:text-xl font-bold text-foreground tracking-tight">{title}</h1>
+              <h1 className="text-base md:text-lg lg:text-xl font-bold text-foreground tracking-tight flex-1">{title}</h1>
             )}
+            <NotificationBell />
           </div>
         </header>
       )}
@@ -103,7 +105,8 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
                   </Link>
                 );
               })}
-              <span className="ml-3 text-sm font-semibold text-muted-foreground">
+              <NotificationBell />
+              <span className="ml-2 text-sm font-semibold text-muted-foreground">
                 Hi, {userName}
               </span>
             </div>
