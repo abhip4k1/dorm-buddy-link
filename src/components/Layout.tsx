@@ -37,8 +37,9 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
               </Link>
             )}
             {title && (
-              <h1 className="text-base md:text-lg lg:text-xl font-bold text-foreground tracking-tight">{title}</h1>
+              <h1 className="text-base md:text-lg lg:text-xl font-bold text-foreground tracking-tight flex-1">{title}</h1>
             )}
+            <NotificationBell />
           </div>
         </header>
       )}
