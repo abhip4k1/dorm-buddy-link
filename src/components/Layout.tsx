@@ -105,7 +105,8 @@ const Layout = ({ children, title, showBack = false, showNav = true }: LayoutPro
                   </Link>
                 );
               })}
-              <span className="ml-3 text-sm font-semibold text-muted-foreground">
+              <NotificationBell />
+              <span className="ml-2 text-sm font-semibold text-muted-foreground">
                 Hi, {userName}
               </span>
             </div>
