@@ -73,7 +73,9 @@ const HealthAppointment = () => {
     if (!selectedDoctor || !selectedSlot) return;
     setIsBooking(true);
     const appointmentId = `PU-HSP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-    const { error: appointmentError } = await supabase.from("appointments").insert({ appointment_id: appointmentId, student_enrollment: "guest", student_name: "Abhi", doctor_id: selectedDoctor.id, slot_id: selectedSlot.id, reason: reason || null, status: "confirmed" });
+    const enrollment = profile?.enrollment_id || user?.email || "";
+    const studentName = profile?.full_name || "Student";
+    const { error: appointmentError } = await supabase.from("appointments").insert({ appointment_id: appointmentId, student_enrollment: enrollment, student_name: studentName, doctor_id: selectedDoctor.id, slot_id: selectedSlot.id, reason: reason || null, status: "confirmed" });
     if (appointmentError) { toast({ title: "Booking failed", description: appointmentError.message, variant: "destructive" }); setIsBooking(false); return; }
     await supabase.from("doctor_slots").update({ is_booked: true }).eq("id", selectedSlot.id);
     setIsBooking(false); setIsBookingDialogOpen(false); setBookedAppointmentId(appointmentId); setIsConfirmationDialogOpen(true);
