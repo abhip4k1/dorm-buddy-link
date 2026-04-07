@@ -60,6 +60,15 @@ const Dashboard = () => {
 
   return (
     <Layout>
+      {/* Admin Panel Link */}
+      {isAdmin && (
+        <Link to="/admin" className="fixed bottom-28 left-5 md:bottom-8 md:left-8 z-40" aria-label="Admin Panel">
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="px-4 py-3 rounded-2xl bg-primary shadow-lg flex items-center gap-2">
+            <Shield className="w-5 h-5 text-primary-foreground" />
+            <span className="text-sm font-semibold text-primary-foreground">Admin</span>
+          </motion.div>
+        </Link>
+      )}
       {/* Floating SOS Button */}
       <Link to="/emergency" className="fixed bottom-28 right-5 md:bottom-8 md:right-8 z-40" aria-label="Emergency SOS">
         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="w-14 h-14 rounded-full gradient-danger shadow-lg flex items-center justify-center relative">
