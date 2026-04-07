@@ -2,17 +2,19 @@ import Layout from "@/components/Layout";
 import { 
   FileWarning, DoorOpen, CreditCard, UtensilsCrossed, Search, AlertTriangle,
   Bell, MessageSquare, HelpCircle, ChevronRight, Droplets, Clock, Stethoscope,
-  Zap, Calendar,
+  Zap, Calendar, Shield,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAdminRole } from "@/hooks/useAdminRole";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const { profile, loading: authLoading } = useAuth();
+  const { isAdmin } = useAdminRole();
   const [announcements, setAnnouncements] = useState<any[]>([]);
   const [stats, setStats] = useState({ complaints: 0, gatePasses: 0 });
 
@@ -58,6 +60,15 @@ const Dashboard = () => {
 
   return (
     <Layout>
+      {/* Admin Panel Link */}
+      {isAdmin && (
+        <Link to="/admin" className="fixed bottom-28 left-5 md:bottom-8 md:left-8 z-40" aria-label="Admin Panel">
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="px-4 py-3 rounded-2xl bg-primary shadow-lg flex items-center gap-2">
+            <Shield className="w-5 h-5 text-primary-foreground" />
+            <span className="text-sm font-semibold text-primary-foreground">Admin</span>
+          </motion.div>
+        </Link>
+      )}
       {/* Floating SOS Button */}
       <Link to="/emergency" className="fixed bottom-28 right-5 md:bottom-8 md:right-8 z-40" aria-label="Emergency SOS">
         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="w-14 h-14 rounded-full gradient-danger shadow-lg flex items-center justify-center relative">

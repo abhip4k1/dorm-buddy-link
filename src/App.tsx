@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AdminRoute from "@/components/AdminRoute";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -24,6 +25,15 @@ import Profile from "./pages/Profile";
 import HealthAppointment from "./pages/HealthAppointment";
 import Notifications from "./pages/Notifications";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminComplaints from "./pages/admin/AdminComplaints";
+import AdminGatePasses from "./pages/admin/AdminGatePasses";
+import AdminAnnouncements from "./pages/admin/AdminAnnouncements";
+import AdminDoctors from "./pages/admin/AdminDoctors";
+import AdminMessMenu from "./pages/admin/AdminMessMenu";
+import AdminEmergency from "./pages/admin/AdminEmergency";
+import AdminFeedback from "./pages/admin/AdminFeedback";
+import AdminStudents from "./pages/admin/AdminStudents";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +63,16 @@ const App = () => (
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/health" element={<ProtectedRoute><HealthAppointment /></ProtectedRoute>} />
             <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+            <Route path="/admin/complaints" element={<AdminRoute><AdminComplaints /></AdminRoute>} />
+            <Route path="/admin/gate-passes" element={<AdminRoute><AdminGatePasses /></AdminRoute>} />
+            <Route path="/admin/announcements" element={<AdminRoute><AdminAnnouncements /></AdminRoute>} />
+            <Route path="/admin/doctors" element={<AdminRoute><AdminDoctors /></AdminRoute>} />
+            <Route path="/admin/mess-menu" element={<AdminRoute><AdminMessMenu /></AdminRoute>} />
+            <Route path="/admin/emergency" element={<AdminRoute><AdminEmergency /></AdminRoute>} />
+            <Route path="/admin/feedback" element={<AdminRoute><AdminFeedback /></AdminRoute>} />
+            <Route path="/admin/students" element={<AdminRoute><AdminStudents /></AdminRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
