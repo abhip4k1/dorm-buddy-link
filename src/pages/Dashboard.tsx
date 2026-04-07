@@ -2,11 +2,12 @@ import Layout from "@/components/Layout";
 import { 
   FileWarning, DoorOpen, CreditCard, UtensilsCrossed, Search, AlertTriangle,
   Bell, MessageSquare, HelpCircle, ChevronRight, Droplets, Clock, Stethoscope,
-  Zap, Calendar,
+  Zap, Calendar, Shield,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAdminRole } from "@/hooks/useAdminRole";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
