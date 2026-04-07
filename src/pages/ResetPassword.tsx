@@ -17,20 +17,46 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isValidSession, setIsValidSession] = useState(false);
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   useEffect(() => {
-    // Check for recovery token in URL hash
-    const hash = window.location.hash;
-    if (hash && hash.includes("type=recovery")) {
-      setIsValidSession(true);
-    }
-    // Also listen for auth state change with recovery event
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
+    // Listen for auth state change with recovery event
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
         setIsValidSession(true);
+        setIsCheckingSession(false);
       }
     });
-    return () => subscription.unsubscribe();
+
+    // Check URL for recovery indicators (hash or query params)
+    const hash = window.location.hash;
+    const params = new URLSearchParams(window.location.search);
+    const hasRecoveryToken = 
+      (hash && hash.includes("type=recovery")) ||
+      params.get("type") === "recovery" ||
+      params.get("token_hash");
+
+    if (hasRecoveryToken) {
+      // Give Supabase client time to process the token
+      setIsValidSession(true);
+      setIsCheckingSession(false);
+    } else {
+      // Also check if there's already an active session (user may have been redirected)
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          setIsValidSession(true);
+        }
+        setIsCheckingSession(false);
+      });
+    }
+
+    // Fallback timeout to stop loading after 5 seconds
+    const timeout = setTimeout(() => setIsCheckingSession(false), 5000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,6 +90,17 @@ const ResetPassword = () => {
           <p className="text-muted-foreground text-center mb-6 text-sm">Your password has been reset successfully.</p>
           <Button onClick={() => navigate("/")} className="rounded-xl gradient-primary">Go to Login</Button>
         </motion.div>
+      </div>
+    );
+  }
+
+  if (isCheckingSession) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background px-5">
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+          <span className="text-sm font-medium">Verifying reset link...</span>
+        </div>
       </div>
     );
   }
