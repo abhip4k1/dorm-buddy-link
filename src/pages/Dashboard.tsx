@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const { profile, loading: authLoading } = useAuth();
+  const { isAdmin } = useAdminRole();
   const [announcements, setAnnouncements] = useState<any[]>([]);
   const [stats, setStats] = useState({ complaints: 0, gatePasses: 0 });
 
