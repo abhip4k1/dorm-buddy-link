@@ -7,10 +7,12 @@ import { GraduationCap, Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { session: authSession, loading: authLoading } = useAuth();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +22,23 @@ const ResetPassword = () => {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   useEffect(() => {
+    if (!authLoading && authSession) {
+      setIsValidSession(true);
+      setIsCheckingSession(false);
+    }
+  }, [authSession, authLoading]);
+
+  useEffect(() => {
     let mounted = true;
+
+    const waitForSession = async () => {
+      for (let attempt = 0; attempt < 20; attempt += 1) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!mounted || session) return Boolean(session);
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      return false;
+    };
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!mounted) return;
@@ -47,7 +65,7 @@ const ResetPassword = () => {
 
         // PKCE flow: ?code=...
         if (code) {
-          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
           if (!mounted) return;
           if (error) {
             toast({ title: "Reset link invalid or expired", description: error.message, variant: "destructive" });
@@ -55,14 +73,14 @@ const ResetPassword = () => {
             return;
           }
           window.history.replaceState({}, "", "/reset-password");
-          setIsValidSession(true);
+          setIsValidSession(Boolean(data.session) || await waitForSession());
           setIsCheckingSession(false);
           return;
         }
 
         // OTP flow: ?token_hash=...&type=recovery
         if (tokenHash && type === "recovery") {
-          const { error } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: tokenHash });
+          const { data, error } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: tokenHash });
           if (!mounted) return;
           if (error) {
             toast({ title: "Reset link invalid or expired", description: error.message, variant: "destructive" });
@@ -70,7 +88,7 @@ const ResetPassword = () => {
             return;
           }
           window.history.replaceState({}, "", "/reset-password");
-          setIsValidSession(true);
+          setIsValidSession(Boolean(data.session) || await waitForSession());
           setIsCheckingSession(false);
           return;
         }
@@ -79,24 +97,24 @@ const ResetPassword = () => {
         const accessToken = hashParams.get("access_token");
         const refreshToken = hashParams.get("refresh_token");
         if (accessToken && refreshToken) {
-          const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          const { data, error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
           if (!mounted) return;
           if (!error) {
             window.history.replaceState({}, "", "/reset-password");
-            setIsValidSession(true);
+            setIsValidSession(Boolean(data.session) || await waitForSession());
           }
           setIsCheckingSession(false);
           return;
         }
 
         // Fallback: existing session?
-        const { data: { session } } = await supabase.auth.getSession();
         if (!mounted) return;
-        if (session) setIsValidSession(true);
+        if (await waitForSession()) setIsValidSession(true);
         setIsCheckingSession(false);
-      } catch (e: any) {
+      } catch (e: unknown) {
         if (!mounted) return;
-        toast({ title: "Could not verify reset link", description: e?.message || "Please request a new link.", variant: "destructive" });
+        const message = e instanceof Error ? e.message : "Please request a new link.";
+        toast({ title: "Could not verify reset link", description: message, variant: "destructive" });
         setIsCheckingSession(false);
       }
     };
