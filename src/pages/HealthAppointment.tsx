@@ -55,8 +55,8 @@ const HealthAppointment = () => {
   };
 
   const fetchMyAppointments = async () => {
-    const enrollment = profile?.enrollment_id || user?.email || "";
-    const { data, error } = await supabase.from("appointments").select(`*, doctors (*), doctor_slots (*)`).eq("student_enrollment", enrollment).order("created_at", { ascending: false });
+    if (!user?.id) return;
+    const { data, error } = await supabase.from("appointments").select(`*, doctors (*), doctor_slots (*)`).eq("user_id", user.id).order("created_at", { ascending: false });
     if (!error) setMyAppointments(data || []);
   };
 
@@ -71,22 +71,37 @@ const HealthAppointment = () => {
 
   const handleBookAppointment = async () => {
     if (!selectedDoctor || !selectedSlot) return;
+    if (!user?.id) {
+      toast({ title: "Please sign in", description: "You must be logged in to book.", variant: "destructive" });
+      return;
+    }
     setIsBooking(true);
     const appointmentId = `PU-HSP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-    const enrollment = profile?.enrollment_id || user?.email || "";
+    const enrollment = profile?.enrollment_id || user.email || "";
     const studentName = profile?.full_name || "Student";
-    const { error: appointmentError } = await supabase.from("appointments").insert({ appointment_id: appointmentId, student_enrollment: enrollment, student_name: studentName, doctor_id: selectedDoctor.id, slot_id: selectedSlot.id, reason: reason || null, status: "confirmed" });
-    if (appointmentError) { toast({ title: "Booking failed", description: appointmentError.message, variant: "destructive" }); setIsBooking(false); return; }
-    await supabase.from("doctor_slots").update({ is_booked: true }).eq("id", selectedSlot.id);
+    const { error: appointmentError } = await supabase.from("appointments").insert({ appointment_id: appointmentId, user_id: user.id, student_enrollment: enrollment, student_name: studentName, doctor_id: selectedDoctor.id, slot_id: selectedSlot.id, reason: reason || null, status: "confirmed" });
+    if (appointmentError) {
+      toast({ title: "Booking failed", description: "Unable to complete your booking. Please try again.", variant: "destructive" });
+      setIsBooking(false);
+      return;
+    }
+    const { error: slotError } = await supabase.from("doctor_slots").update({ is_booked: true }).eq("id", selectedSlot.id);
+    if (slotError) {
+      toast({ title: "Slot update issue", description: "Booking saved but slot status may need a refresh.", variant: "destructive" });
+    }
     setIsBooking(false); setIsBookingDialogOpen(false); setBookedAppointmentId(appointmentId); setIsConfirmationDialogOpen(true);
     fetchMyAppointments(); fetchSlots(selectedDoctor.id); setReason(""); setSelectedSlot(null);
   };
 
   const handleCancelAppointment = async (appointment: Appointment) => {
     const { error } = await supabase.from("appointments").update({ status: "cancelled" }).eq("id", appointment.id);
-    if (error) { toast({ title: "Cancellation failed", description: error.message, variant: "destructive" }); return; }
-    await supabase.from("doctor_slots").update({ is_booked: false }).eq("id", appointment.slot_id);
-    toast({ title: "Appointment cancelled", description: "Your appointment has been cancelled successfully." });
+    if (error) { toast({ title: "Cancellation failed", description: "Unable to cancel. Please try again.", variant: "destructive" }); return; }
+    const { error: slotError } = await supabase.from("doctor_slots").update({ is_booked: false }).eq("id", appointment.slot_id);
+    if (slotError) {
+      toast({ title: "Partial cancellation", description: "Appointment cancelled but slot may need manual release.", variant: "destructive" });
+    } else {
+      toast({ title: "Appointment cancelled", description: "Your appointment has been cancelled successfully." });
+    }
     fetchMyAppointments();
   };
 

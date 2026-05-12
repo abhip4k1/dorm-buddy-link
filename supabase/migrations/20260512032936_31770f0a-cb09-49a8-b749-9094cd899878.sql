@@ -1,0 +1,1 @@
+UPDATE public.appointments a SET user_id = p.id FROM public.profiles p WHERE a.user_id IS NULL AND p.enrollment_id = a.student_enrollment;
