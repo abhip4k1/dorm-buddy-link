@@ -65,7 +65,7 @@ const ResetPassword = () => {
 
         // PKCE flow: ?code=...
         if (code) {
-          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
           if (!mounted) return;
           if (error) {
             toast({ title: "Reset link invalid or expired", description: error.message, variant: "destructive" });
@@ -73,14 +73,14 @@ const ResetPassword = () => {
             return;
           }
           window.history.replaceState({}, "", "/reset-password");
-          setIsValidSession(await waitForSession());
+          setIsValidSession(Boolean(data.session) || await waitForSession());
           setIsCheckingSession(false);
           return;
         }
 
         // OTP flow: ?token_hash=...&type=recovery
         if (tokenHash && type === "recovery") {
-          const { error } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: tokenHash });
+          const { data, error } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: tokenHash });
           if (!mounted) return;
           if (error) {
             toast({ title: "Reset link invalid or expired", description: error.message, variant: "destructive" });
@@ -88,7 +88,7 @@ const ResetPassword = () => {
             return;
           }
           window.history.replaceState({}, "", "/reset-password");
-          setIsValidSession(await waitForSession());
+          setIsValidSession(Boolean(data.session) || await waitForSession());
           setIsCheckingSession(false);
           return;
         }
@@ -97,11 +97,11 @@ const ResetPassword = () => {
         const accessToken = hashParams.get("access_token");
         const refreshToken = hashParams.get("refresh_token");
         if (accessToken && refreshToken) {
-          const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          const { data, error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
           if (!mounted) return;
           if (!error) {
             window.history.replaceState({}, "", "/reset-password");
-            setIsValidSession(await waitForSession());
+            setIsValidSession(Boolean(data.session) || await waitForSession());
           }
           setIsCheckingSession(false);
           return;
