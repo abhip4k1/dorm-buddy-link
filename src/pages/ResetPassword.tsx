@@ -111,9 +111,10 @@ const ResetPassword = () => {
         if (!mounted) return;
         if (await waitForSession()) setIsValidSession(true);
         setIsCheckingSession(false);
-      } catch (e: any) {
+      } catch (e: unknown) {
         if (!mounted) return;
-        toast({ title: "Could not verify reset link", description: e?.message || "Please request a new link.", variant: "destructive" });
+        const message = e instanceof Error ? e.message : "Please request a new link.";
+        toast({ title: "Could not verify reset link", description: message, variant: "destructive" });
         setIsCheckingSession(false);
       }
     };
