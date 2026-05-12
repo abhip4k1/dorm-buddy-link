@@ -20,44 +20,94 @@ const ResetPassword = () => {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   useEffect(() => {
-    // Listen for auth state change with recovery event
+    let mounted = true;
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!mounted) return;
       if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
         setIsValidSession(true);
         setIsCheckingSession(false);
       }
     });
 
-    // Check URL for recovery indicators (hash or query params)
-    const hash = window.location.hash;
-    const params = new URLSearchParams(window.location.search);
-    const hasRecoveryToken = 
-      (hash && hash.includes("type=recovery")) ||
-      params.get("type") === "recovery" ||
-      params.get("token_hash");
+    const init = async () => {
+      try {
+        const url = new URL(window.location.href);
+        const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+        const code = url.searchParams.get("code");
+        const tokenHash = url.searchParams.get("token_hash") || hashParams.get("token_hash");
+        const type = url.searchParams.get("type") || hashParams.get("type");
+        const errorDesc = url.searchParams.get("error_description") || hashParams.get("error_description");
 
-    if (hasRecoveryToken) {
-      // Give Supabase client time to process the token
-      setIsValidSession(true);
-      setIsCheckingSession(false);
-    } else {
-      // Also check if there's already an active session (user may have been redirected)
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          setIsValidSession(true);
+        if (errorDesc) {
+          toast({ title: "Reset link invalid", description: errorDesc, variant: "destructive" });
+          setIsCheckingSession(false);
+          return;
         }
-        setIsCheckingSession(false);
-      });
-    }
 
-    // Fallback timeout to stop loading after 5 seconds
-    const timeout = setTimeout(() => setIsCheckingSession(false), 5000);
+        // PKCE flow: ?code=...
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if (!mounted) return;
+          if (error) {
+            toast({ title: "Reset link invalid or expired", description: error.message, variant: "destructive" });
+            setIsCheckingSession(false);
+            return;
+          }
+          window.history.replaceState({}, "", "/reset-password");
+          setIsValidSession(true);
+          setIsCheckingSession(false);
+          return;
+        }
+
+        // OTP flow: ?token_hash=...&type=recovery
+        if (tokenHash && type === "recovery") {
+          const { error } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: tokenHash });
+          if (!mounted) return;
+          if (error) {
+            toast({ title: "Reset link invalid or expired", description: error.message, variant: "destructive" });
+            setIsCheckingSession(false);
+            return;
+          }
+          window.history.replaceState({}, "", "/reset-password");
+          setIsValidSession(true);
+          setIsCheckingSession(false);
+          return;
+        }
+
+        // Legacy implicit flow (#access_token=...)
+        const accessToken = hashParams.get("access_token");
+        const refreshToken = hashParams.get("refresh_token");
+        if (accessToken && refreshToken) {
+          const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          if (!mounted) return;
+          if (!error) {
+            window.history.replaceState({}, "", "/reset-password");
+            setIsValidSession(true);
+          }
+          setIsCheckingSession(false);
+          return;
+        }
+
+        // Fallback: existing session?
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!mounted) return;
+        if (session) setIsValidSession(true);
+        setIsCheckingSession(false);
+      } catch (e: any) {
+        if (!mounted) return;
+        toast({ title: "Could not verify reset link", description: e?.message || "Please request a new link.", variant: "destructive" });
+        setIsCheckingSession(false);
+      }
+    };
+
+    init();
 
     return () => {
+      mounted = false;
       subscription.unsubscribe();
-      clearTimeout(timeout);
     };
-  }, []);
+  }, [toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
