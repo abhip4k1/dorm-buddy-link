@@ -53,6 +53,7 @@ export type Database = {
           student_enrollment: string
           student_name: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           appointment_id: string
@@ -65,6 +66,7 @@ export type Database = {
           student_enrollment: string
           student_name: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           appointment_id?: string
@@ -77,6 +79,7 @@ export type Database = {
           student_enrollment?: string
           student_name?: string
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: [
           {
