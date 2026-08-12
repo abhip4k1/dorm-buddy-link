@@ -566,9 +566,58 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      lost_found_items_public: {
+        Row: {
+          contact_info: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          is_resolved: boolean | null
+          item_name: string | null
+          item_type: string | null
+          location: string | null
+          user_id: string | null
+        }
+        Insert: {
+          contact_info?: never
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_resolved?: boolean | null
+          item_name?: string | null
+          item_type?: string | null
+          location?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          contact_info?: never
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_resolved?: boolean | null
+          item_name?: string | null
+          item_type?: string | null
+          location?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      book_appointment_slot: {
+        Args: {
+          _appointment_id: string
+          _reason?: string
+          _slot_id: string
+          _student_enrollment: string
+          _student_name: string
+        }
+        Returns: string
+      }
+      cancel_appointment: {
+        Args: { _appointment_row_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
