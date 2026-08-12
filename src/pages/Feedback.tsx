@@ -33,7 +33,7 @@ const Feedback = () => {
       if (!user) { toast.error("Please login"); return; }
 
       const { error } = await supabase.from("feedback").insert({
-        user_id: user.id,
+        user_id: isAnonymous ? null : user.id,
         satisfaction,
         message: feedback.trim(),
         is_anonymous: isAnonymous,
