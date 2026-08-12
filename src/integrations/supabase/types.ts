@@ -566,42 +566,7 @@ export type Database = {
       }
     }
     Views: {
-      lost_found_items_public: {
-        Row: {
-          contact_info: string | null
-          created_at: string | null
-          description: string | null
-          id: string | null
-          is_resolved: boolean | null
-          item_name: string | null
-          item_type: string | null
-          location: string | null
-          user_id: string | null
-        }
-        Insert: {
-          contact_info?: never
-          created_at?: string | null
-          description?: string | null
-          id?: string | null
-          is_resolved?: boolean | null
-          item_name?: string | null
-          item_type?: string | null
-          location?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          contact_info?: never
-          created_at?: string | null
-          description?: string | null
-          id?: string | null
-          is_resolved?: boolean | null
-          item_name?: string | null
-          item_type?: string | null
-          location?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       book_appointment_slot: {
@@ -617,6 +582,20 @@ export type Database = {
       cancel_appointment: {
         Args: { _appointment_row_id: string }
         Returns: undefined
+      }
+      get_lost_found_items: {
+        Args: never
+        Returns: {
+          contact_info: string
+          created_at: string
+          description: string
+          id: string
+          is_resolved: boolean
+          item_name: string
+          item_type: string
+          location: string
+          user_id: string
+        }[]
       }
       has_role: {
         Args: {
