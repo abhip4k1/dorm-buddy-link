@@ -28,11 +28,8 @@ const LostFound = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchItems = async () => {
-    const { data, error } = await supabase
-      .from("lost_found_items")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (!error && data) setItems(data);
+    const { data, error } = await supabase.rpc("get_lost_found_items");
+    if (!error && data) setItems(data as LostFoundItem[]);
     setLoading(false);
   };
 
