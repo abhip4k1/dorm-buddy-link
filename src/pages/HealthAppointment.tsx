@@ -79,29 +79,27 @@ const HealthAppointment = () => {
     const appointmentId = `PU-HSP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
     const enrollment = profile?.enrollment_id || user.email || "";
     const studentName = profile?.full_name || "Student";
-    const { error: appointmentError } = await supabase.from("appointments").insert({ appointment_id: appointmentId, user_id: user.id, student_enrollment: enrollment, student_name: studentName, doctor_id: selectedDoctor.id, slot_id: selectedSlot.id, reason: reason || null, status: "confirmed" });
-    if (appointmentError) {
-      toast({ title: "Booking failed", description: "Unable to complete your booking. Please try again.", variant: "destructive" });
+    const { error: bookingError } = await supabase.rpc("book_appointment_slot", {
+      _slot_id: selectedSlot.id,
+      _appointment_id: appointmentId,
+      _student_enrollment: enrollment,
+      _student_name: studentName,
+      _reason: reason || null,
+    });
+    if (bookingError) {
+      toast({ title: "Booking failed", description: "This slot may no longer be available. Please pick another.", variant: "destructive" });
       setIsBooking(false);
+      fetchSlots(selectedDoctor.id);
       return;
-    }
-    const { error: slotError } = await supabase.from("doctor_slots").update({ is_booked: true }).eq("id", selectedSlot.id);
-    if (slotError) {
-      toast({ title: "Slot update issue", description: "Booking saved but slot status may need a refresh.", variant: "destructive" });
     }
     setIsBooking(false); setIsBookingDialogOpen(false); setBookedAppointmentId(appointmentId); setIsConfirmationDialogOpen(true);
     fetchMyAppointments(); fetchSlots(selectedDoctor.id); setReason(""); setSelectedSlot(null);
   };
 
   const handleCancelAppointment = async (appointment: Appointment) => {
-    const { error } = await supabase.from("appointments").update({ status: "cancelled" }).eq("id", appointment.id);
+    const { error } = await supabase.rpc("cancel_appointment", { _appointment_row_id: appointment.id });
     if (error) { toast({ title: "Cancellation failed", description: "Unable to cancel. Please try again.", variant: "destructive" }); return; }
-    const { error: slotError } = await supabase.from("doctor_slots").update({ is_booked: false }).eq("id", appointment.slot_id);
-    if (slotError) {
-      toast({ title: "Partial cancellation", description: "Appointment cancelled but slot may need manual release.", variant: "destructive" });
-    } else {
-      toast({ title: "Appointment cancelled", description: "Your appointment has been cancelled successfully." });
-    }
+    toast({ title: "Appointment cancelled", description: "Your appointment has been cancelled successfully." });
     fetchMyAppointments();
   };
 
