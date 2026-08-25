@@ -44,13 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSession(session);
         setUser(session?.user ?? null);
 
-        // Recovery emails can briefly return to the configured site URL before
-        // the auth client has finished hydrating the recovery session. Send the
-        // user to the password form as soon as that session is available.
-        if (event === "PASSWORD_RECOVERY" && window.location.pathname !== "/reset-password") {
-          window.location.replace("/reset-password");
-          return;
-        }
 
         if (session?.user) {
           setTimeout(() => fetchProfile(session.user.id), 0);
