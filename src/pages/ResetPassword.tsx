@@ -99,10 +99,13 @@ const ResetPassword = () => {
         if (accessToken && refreshToken) {
           const { data, error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
           if (!mounted) return;
-          if (!error) {
-            window.history.replaceState({}, "", "/reset-password");
-            setIsValidSession(Boolean(data.session) || await waitForSession());
+          if (error) {
+            toast({ title: "Reset link invalid or expired", description: error.message, variant: "destructive" });
+            setIsCheckingSession(false);
+            return;
           }
+          window.history.replaceState({}, "", "/reset-password");
+          setIsValidSession(Boolean(data.session) || await waitForSession());
           setIsCheckingSession(false);
           return;
         }
@@ -208,6 +211,7 @@ const ResetPassword = () => {
               <div className="relative">
                 <Input id="password" type={showPassword ? "text" : "password"} placeholder="Min 6 characters"
                   value={password} onChange={(e) => setPassword(e.target.value)}
+                   autoComplete="new-password" required minLength={6}
                   className="h-12 bg-background border border-border rounded-xl px-4 pr-12" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
@@ -219,6 +223,7 @@ const ResetPassword = () => {
               <Label htmlFor="confirm" className="text-foreground font-semibold text-sm">Confirm Password</Label>
               <Input id="confirm" type="password" placeholder="Re-enter password"
                 value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+                 autoComplete="new-password" required minLength={6}
                 className="h-12 bg-background border border-border rounded-xl px-4" />
             </div>
             <Button type="submit" className="w-full h-12 rounded-xl gradient-primary font-bold" disabled={isLoading}>

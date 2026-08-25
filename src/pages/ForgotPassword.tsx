@@ -16,20 +16,31 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) {
+    const normalizedEmail = email.trim().toLowerCase();
+    if (!normalizedEmail) {
       toast({ title: "Please enter your email", variant: "destructive" });
       return;
     }
     setIsLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
-    if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
+        redirectTo: new URL("/reset-password", window.location.origin).toString(),
+      });
+      if (error) {
+        toast({ title: "Could not send reset link", description: error.message, variant: "destructive" });
+        return;
+      }
+      setEmail(normalizedEmail);
       setIsSent(true);
+    } catch {
+      toast({
+        title: "Could not send reset link",
+        description: "Please check your connection and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -73,6 +84,8 @@ const ForgotPassword = () => {
                   <Input
                     id="email"
                     type="email"
+                   autoComplete="email"
+                   required
                     placeholder="yourname@paruluniversity.ac.in"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
