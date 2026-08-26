@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard, MessageSquare, DoorOpen, Megaphone, Stethoscope,
+  LayoutDashboard, MessageSquare, DoorOpen, Megaphone,
   UtensilsCrossed, AlertTriangle, Star, Users, LogOut, ArrowLeft
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -17,7 +17,6 @@ const sidebarItems = [
   { path: "/admin/complaints", icon: MessageSquare, label: "Complaints" },
   { path: "/admin/gate-passes", icon: DoorOpen, label: "Gate Passes" },
   { path: "/admin/announcements", icon: Megaphone, label: "Announcements" },
-  { path: "/admin/doctors", icon: Stethoscope, label: "Doctors & Slots" },
   { path: "/admin/mess-menu", icon: UtensilsCrossed, label: "Mess Menu" },
   { path: "/admin/emergency", icon: AlertTriangle, label: "Emergencies" },
   { path: "/admin/feedback", icon: Star, label: "Feedback" },

@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { 
   FileWarning, DoorOpen, CreditCard, UtensilsCrossed, Search, AlertTriangle,
-  Bell, MessageSquare, HelpCircle, ChevronRight, Droplets, Clock, Stethoscope,
+  Bell, MessageSquare, HelpCircle, ChevronRight, Droplets, Clock,
   Zap, Calendar, Shield,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -43,7 +43,6 @@ const Dashboard = () => {
   const quickActions = [
     { to: "/complaints/new", icon: FileWarning, label: "Complaints", emoji: "📝", gradient: "gradient-accent", ring: "ring-orange-200" },
     { to: "/gate-pass", icon: DoorOpen, label: "Gate Pass", emoji: "🚪", gradient: "gradient-primary", ring: "ring-blue-200" },
-    { to: "/health", icon: Stethoscope, label: "Health", emoji: "🏥", gradient: "gradient-success", ring: "ring-emerald-200" },
     { to: "/mess-menu", icon: UtensilsCrossed, label: "Mess Menu", emoji: "🍽️", gradient: "gradient-warning", ring: "ring-amber-200" },
     { to: "/lost-found", icon: Search, label: "Lost & Found", emoji: "🔍", gradient: "gradient-purple", ring: "ring-purple-200" },
     { to: "/fee-status", icon: CreditCard, label: "Fee Status", emoji: "💳", gradient: "gradient-pink", ring: "ring-pink-200" },
